@@ -12,9 +12,10 @@ import java.util.Optional;
  */
 public class MediaManager {
 
+
     // <editor-fold defaultstate="collapsed" desc="Books">
     public Optional<Response> createBook(IBook book){
-        throw new NotImplementedException();
+
     }
     public Optional<Response> getBooks(){ throw new NotImplementedException(); }
     public Optional<Response> getBook(String isbn){throw new NotImplementedException(); }

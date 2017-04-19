@@ -5,6 +5,7 @@ import edu.hm.rfurch.shareit.model.ICopy;
 import edu.hm.rfurch.shareit.model.IDisc;
 import edu.hm.rfurch.shareit.model.IMedium;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -23,6 +24,6 @@ public interface IData {
                 .map(m -> (IBook)m).filter(b -> b.getIsbn().equals(isbn)).findAny();
     }
     List<IMedium> getMediums();
-    void add(IMedium medium);
+    Optional<Boolean> add(IMedium medium);
 
 }
