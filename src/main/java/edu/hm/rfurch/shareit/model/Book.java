@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Book extends BaseMedium implements IBook{
     public Book(String title, String author, String isbn) {
         super(title);
+        // TODO check for ISBN-13
         this.author = author;
         this.isbn = isbn;
     }
