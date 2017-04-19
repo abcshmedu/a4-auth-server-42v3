@@ -31,6 +31,6 @@ public class MediaManager {
     public Optional<Response> getDisc(String barcode){throw new NotImplementedException(); }
     public Optional<Response> updatDisc(IDisc disc){
         throw new NotImplementedException();
-    } 
+    }
     // </editor-fold>
 }
