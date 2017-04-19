@@ -1,7 +1,5 @@
 package edu.hm.rfurch.shareit.model;
 
-import java.util.Objects;
-
 /**
  * Created by rapha on 12.04.2017.
  */
@@ -13,7 +11,8 @@ public class Book extends BaseMedium implements IBook{
         this.isbn = isbn;
     }
 
-    private Book(){
+    @SuppressWarnings("unused") // Constructor for Reflection
+	private Book(){
         this("","","");
     }
 

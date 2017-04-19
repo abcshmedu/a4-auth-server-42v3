@@ -14,12 +14,12 @@ public class Copy implements ICopy {
     private final IMedium medium;
     @Override
     public IMedium getMedium() {
-        return null;
+        return medium;
     }
 
     private final String owner;
     @Override
     public String getUsername() {
-        return null;
+        return owner;
     }
 }

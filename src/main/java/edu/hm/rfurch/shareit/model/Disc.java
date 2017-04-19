@@ -13,7 +13,7 @@ public class Disc extends BaseMedium implements IDisc {
         this.fsk = fsk;
     }
 
-
+    @SuppressWarnings("unused") // Constructor for Reflection
     private Disc(){
         this("","","",0);
     }
