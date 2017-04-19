@@ -1,14 +1,11 @@
 package edu.hm.rfurch.shareit.data;
 
 import edu.hm.rfurch.shareit.model.IBook;
-import edu.hm.rfurch.shareit.model.ICopy;
 import edu.hm.rfurch.shareit.model.IDisc;
 import edu.hm.rfurch.shareit.model.IMedium;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * Created by Raphael Furch on 12.04.2017.
@@ -25,5 +22,7 @@ public interface IData {
     }
     List<IMedium> getMediums();
     Optional<Boolean> add(IMedium medium);
+    Optional<Boolean> remove(IMedium medium);
+    Optional<Boolean> clear();
 
 }

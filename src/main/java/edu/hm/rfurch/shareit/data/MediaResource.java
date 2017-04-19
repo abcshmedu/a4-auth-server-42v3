@@ -1,11 +1,8 @@
 package edu.hm.rfurch.shareit.data;
 
-import com.sun.javafx.UnmodifiableArrayList;
 import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.Disc;
 import edu.hm.rfurch.shareit.model.IMedium;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.*;
 
 /**
@@ -13,24 +10,26 @@ import java.util.*;
  */
 public class MediaResource implements IData {
 
-    private final static List<IMedium> MEDIUMS = new ArrayList<IMedium>(){
-        {
-            add(new Book("Title1", "Author1", "1"));
-            add(new Disc("Disc1", "Code1", "Dirctor1", 1));
-        }
-    };
+    private final List<IMedium> mediaDatabase;
+    
+
+	protected MediaResource() {
+    	mediaDatabase = new ArrayList<>();
+    	mediaDatabase.add(new Book("Title1", "Author1", "1"));
+    	mediaDatabase.add(new Disc("Disc1", "Code1", "Dirctor1", 1));
+    }
 
     @Override
     public List<IMedium> getMediums() {
-       return Collections.unmodifiableList(MEDIUMS);
+       return Collections.unmodifiableList(getMediaDatabase());
     }
 
     @Override
     public Optional<Boolean> add(IMedium medium) {
 
         Optional<Boolean> result;
-        if(medium != null && !MEDIUMS.contains(medium)){
-            MEDIUMS.add(medium);
+        if(medium != null && !getMediaDatabase().contains(medium)){
+        	getMediaDatabase().add(medium);
             result = Optional.of(true);
         }
         else
@@ -40,4 +39,22 @@ public class MediaResource implements IData {
         return result;
 
     }
+    
+    private List<IMedium> getMediaDatabase() {
+		return mediaDatabase;
+	}
+
+	@Override
+	public Optional<Boolean> remove(IMedium medium) {
+		final boolean result = getMediaDatabase().remove(medium);
+		return Optional.of(result);
+	}
+
+	@Override
+	public Optional<Boolean> clear() {
+		getMediaDatabase().clear();
+		return Optional.of(true);
+	}
+    
+    
 }
