@@ -65,6 +65,21 @@ public class BookTest {
         Assert.assertEquals(b2, b2Tmp);
 
     }
+    @Test
+    public void checkEasyUpdateOnlyNullFields(){
+        IBook b1 = new Book("1", "2", "3");
+        IBook b2 = new Book("5", null, "3");
+
+        Optional<IBook> oBook = b1.update(b2);
+        Assert.assertTrue(oBook.isPresent());
+
+        Assert.assertEquals("5",oBook.get().getTitle());
+        Assert.assertEquals("2",oBook.get().getAuthor());
+        Assert.assertEquals("3",oBook.get().getIsbn());
+
+
+
+    }
 
     @Test
     public void checkEasyUpdateNotSameBook(){

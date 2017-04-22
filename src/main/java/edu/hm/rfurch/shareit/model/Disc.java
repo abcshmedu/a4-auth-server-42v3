@@ -43,7 +43,7 @@ public class Disc extends BaseMedium implements IDisc {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
+        if(!super.equals(o)) return false;
         Disc disc = (Disc) o;
 
         if (fsk != disc.fsk) return false;
