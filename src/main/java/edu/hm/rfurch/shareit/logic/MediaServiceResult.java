@@ -1,8 +1,11 @@
 package edu.hm.rfurch.shareit.logic;
 
 
+import edu.hm.rfurch.shareit.model.IMedium;
 import org.eclipse.jetty.server.Response;
 import org.json.JSONObject;
+
+import java.util.Collection;
 
 /**
  * Created by FURCH on 19/04/2017.
@@ -26,6 +29,7 @@ public enum MediaServiceResult {
 
     private final int code;
     private final String status;
+    private Collection<IMedium> responseData;
     MediaServiceResult(int code, String status){
         this.code = code;
         this.status = status;
@@ -37,6 +41,13 @@ public enum MediaServiceResult {
     public String getStatus(){
         return this.status;
     }
+    public  MediaServiceResult setResponseData( Collection<IMedium> data){
+        this.responseData = data;
+        return this;
+    }
+    public Collection<IMedium> getResponseData(){
+        return this.responseData;
+    }
 
     public javax.ws.rs.core.Response getResponse(){
 
@@ -44,6 +55,8 @@ public enum MediaServiceResult {
                 .entity(new JSONObject()
                 .put("status", this.getCode())
                 .put("message", this.getStatus())
+                .put("data-length", this.getResponseData() != null?this.getResponseData().size():-1)
+                .put("data", this.getResponseData() != null?this.getResponseData().size()>0?this.getResponseData():"":"error") // TODO json serilize
                 .put("help", "http://lmgtfy.com/?q=http+statuscode+"+this.getCode()))
                 .build();
     }

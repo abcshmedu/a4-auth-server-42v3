@@ -1,8 +1,6 @@
 package edu.hm.rfurch.shareit.data;
 
-import edu.hm.rfurch.shareit.model.Book;
-import edu.hm.rfurch.shareit.model.Disc;
-import edu.hm.rfurch.shareit.model.IMedium;
+import edu.hm.rfurch.shareit.model.*;
 import java.util.*;
 
 /**
