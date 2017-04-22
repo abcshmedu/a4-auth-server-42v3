@@ -1,11 +1,15 @@
 package edu.hm.rfurch.shareit.model;
 
+import java.util.Optional;
+
 /**
  * Created by rapha on 12.04.2017.
  */
 public class Book extends BaseMedium implements IBook{
     public Book(String title, String author, String isbn) {
         super(title);
+        if(isbn == null)
+            throw new IllegalArgumentException("ISBN = null is bad.");
         // TODO check for ISBN-13
         this.author = author;
         this.isbn = isbn;
@@ -27,6 +31,18 @@ public class Book extends BaseMedium implements IBook{
     @Override
     public String getIsbn() {
         return this.isbn;
+    }
+
+    @Override
+    public Optional<IBook> update(IBook book) {
+        Optional<IBook> result = Optional.empty();
+        if(book != null && this.getIsbn().equals(book.getIsbn())){
+            result = Optional.of(new Book(
+                    book.getTitle()!= null?book.getTitle():this.getTitle(),
+                    book.getAuthor()!= null?book.getAuthor():this.getAuthor(),
+                    this.getIsbn()));
+        }
+        return result;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package edu.hm.rfurch.shareit.model;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
+
 /**
  * Created by rapha on 12.04.2017.
  */

@@ -5,6 +5,7 @@ import edu.hm.rfurch.shareit.model.IMedium;
 import org.eclipse.jetty.server.Response;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -29,7 +30,7 @@ public enum MediaServiceResult {
 
     private final int code;
     private final String status;
-    private Collection<IMedium> responseData;
+    private Collection<Object> responseData;
     MediaServiceResult(int code, String status){
         this.code = code;
         this.status = status;
@@ -41,11 +42,17 @@ public enum MediaServiceResult {
     public String getStatus(){
         return this.status;
     }
-    public  MediaServiceResult setResponseData( Collection<IMedium> data){
+    public  MediaServiceResult setResponseData( Collection<Object> data){
         this.responseData = data;
         return this;
     }
-    public Collection<IMedium> getResponseData(){
+    public MediaServiceResult setResponseData(Object data){
+        this.setResponseData(new ArrayList<>());
+        this.getResponseData().add(data);
+        return this;
+    }
+
+    public Collection<Object> getResponseData(){
         return this.responseData;
     }
 

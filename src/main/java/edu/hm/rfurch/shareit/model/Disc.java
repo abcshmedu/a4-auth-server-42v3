@@ -1,17 +1,20 @@
 package edu.hm.rfurch.shareit.model;
 
+import java.util.Optional;
+
 /**
  * Created by rapha on 12.04.2017.
  */
 public class Disc extends BaseMedium implements IDisc {
-    public Disc(String title, String barcode, String director, int fsk) {
+    public Disc(String title, String barcode, String director, Integer fsk) {
         super(title);
-        if(fsk < 0)
-            throw new IllegalArgumentException("Fsk must be bigger then 0");
+        if(barcode == null)
+            throw new IllegalArgumentException("Barcode = null is bad.");
         this.barcode = barcode;
         this.director = director;
         this.fsk = fsk;
     }
+
 
     @SuppressWarnings("unused") // Constructor for Reflection
     private Disc(){
@@ -30,9 +33,9 @@ public class Disc extends BaseMedium implements IDisc {
         return this.director;
     }
 
-    private final int fsk;
+    private final Integer fsk;
     @Override
-    public int getFsk() {
+    public Integer getFsk() {
         return this.fsk;
     }
 
@@ -59,5 +62,18 @@ public class Disc extends BaseMedium implements IDisc {
     @Override
     public String toString() {
         return null;
+    }
+
+    @Override
+    public Optional<IDisc> update(IDisc disc) {
+        Optional<IDisc> result = Optional.empty();
+        if(disc != null && this.getBarcode().equals(disc.getBarcode())){
+            result = Optional.of(new Disc(
+                    disc.getTitle()!= null?disc.getTitle():this.getTitle(),
+                    this.getBarcode(),
+                    disc.getDirector()!= null?disc.getDirector():this.getDirector(),
+                    disc.getFsk()!=null?disc.getFsk():this.getFsk()));
+        }
+        return result;
     }
 }
