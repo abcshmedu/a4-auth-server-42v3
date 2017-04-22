@@ -1,10 +1,13 @@
 package edu.hm.rfurch.shareit.logic;
 
+import edu.hm.rfurch.shareit.data.ResourceManager;
 import edu.hm.rfurch.shareit.model.IBook;
 import edu.hm.rfurch.shareit.model.IDisc;
 import edu.hm.rfurch.shareit.model.IMedium;
+import org.junit.Assert;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -12,37 +15,102 @@ import java.util.Optional;
  */
 public class MediaService implements IMediaService {
 
-    private MediaService(){
-        throw new NotImplementedException();
-    }
 
     @Override
     public Optional<MediaServiceResult> addBook(IBook book) {
-        throw new NotImplementedException();
+        if(book == null)
+            throw new NullPointerException();
+        return Optional.of(ResourceManager.dataAccess().add(book).get()?
+                MediaServiceResult.OK:
+                MediaServiceResult.BadRequest);
     }
 
     @Override
-    public Optional<MediaServiceResult> addDisc(IDisc disc) {
-        throw new NotImplementedException();
+    public Optional<MediaServiceResult> getBooks() {
+        return Optional.of(MediaServiceResult.OK.setResponseData(
+                ResourceManager.dataAccess().getBooks().orElse(new ArrayList<>())));
     }
 
     @Override
-    public Optional<IMedium[]> getBooks() {
-        throw new NotImplementedException();
-    }
+    public Optional<MediaServiceResult> getBook(IBook book) {
+        if(book == null)
+            throw new NullPointerException();
+        return Optional.of(MediaServiceResult.OK.setResponseData(
+                ResourceManager.dataAccess().getBook(book.getIsbn())));
 
-    @Override
-    public Optional<IMedium[]> getDiscs() {
-        throw new NotImplementedException();
     }
 
     @Override
     public Optional<MediaServiceResult> updateBook(IBook book) {
-        throw new NotImplementedException();
+        if(book == null)
+            throw new NullPointerException();
+        Optional<IBook> oFullBook = ResourceManager.dataAccess().getBook(book.getIsbn());
+        if(oFullBook.isPresent()){
+            Optional<IBook> updatedBook = oFullBook.get().update(book);
+            if(updatedBook.isPresent()){
+                ResourceManager.dataAccess().remove(oFullBook.get());
+                ResourceManager.dataAccess().add(updatedBook.get());
+                return Optional.of(MediaServiceResult.OK);
+            }
+        }
+        return Optional.of(MediaServiceResult.BadRequest);
+    }
+
+    @Override
+    public Optional<MediaServiceResult> removeBook(IBook book) {
+        if(book == null)
+            throw new NullPointerException();
+        return  Optional.of(ResourceManager.dataAccess().remove(book).orElse(false)?
+                MediaServiceResult.NoContent:
+                MediaServiceResult.BadRequest);
+    }
+
+    @Override
+    public Optional<MediaServiceResult> addDisc(IDisc disc) {
+        if(disc == null)
+            throw new NullPointerException();
+        return Optional.of(ResourceManager.dataAccess().add(disc).get()?
+                MediaServiceResult.OK:
+                MediaServiceResult.BadRequest);
+    }
+
+    @Override
+    public Optional<MediaServiceResult> getDiscs() {
+        return Optional.of(MediaServiceResult.OK.setResponseData(
+                ResourceManager.dataAccess().getDiscs().orElse(new ArrayList<>())
+        ));
+    }
+
+    @Override
+    public Optional<MediaServiceResult> getDisc(IDisc disc) {
+        if(disc == null)
+            throw new NullPointerException();
+        return Optional.of(MediaServiceResult.OK.setResponseData(
+                ResourceManager.dataAccess().getDisc(disc.getBarcode())));
     }
 
     @Override
     public Optional<MediaServiceResult> updateDisc(IDisc disc) {
-        throw new NotImplementedException();
+        if(disc == null)
+            throw new NullPointerException();
+        Optional<IDisc> oFullDisc = ResourceManager.dataAccess().getDisc(disc.getBarcode());
+        if(oFullDisc.isPresent()){
+            Optional<IDisc> updatedDisc = oFullDisc.get().update(disc);
+            if(updatedDisc.isPresent()){
+                ResourceManager.dataAccess().remove(oFullDisc.get());
+                ResourceManager.dataAccess().add(updatedDisc.get());
+                return Optional.of(MediaServiceResult.OK);
+            }
+        }
+        return Optional.of(MediaServiceResult.BadRequest);
+    }
+
+    @Override
+    public Optional<MediaServiceResult> removeDisk(IDisc disc) {
+       if(disc == null)
+           throw new NullPointerException();
+        return  Optional.of(ResourceManager.dataAccess().remove(disc).orElse(false)?
+                MediaServiceResult.NoContent:
+                MediaServiceResult.BadRequest);
     }
 }

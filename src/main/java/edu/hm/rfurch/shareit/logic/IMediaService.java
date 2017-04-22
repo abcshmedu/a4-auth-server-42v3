@@ -12,10 +12,15 @@ import java.util.Optional;
 public interface IMediaService {
 
     Optional<MediaServiceResult> addBook(IBook book);
-    Optional<MediaServiceResult> addDisc(IDisc disc);
-    Optional<IMedium[]> getBooks();
-    Optional<IMedium[]> getDiscs();
+    Optional<MediaServiceResult> getBooks();
+    Optional<MediaServiceResult> getBook(IBook book);
     Optional<MediaServiceResult> updateBook(IBook book);
+    Optional<MediaServiceResult> removeBook(IBook book);
+
+    Optional<MediaServiceResult> addDisc(IDisc disc);
+    Optional<MediaServiceResult> getDiscs();
+    Optional<MediaServiceResult> getDisc(IDisc disc);
     Optional<MediaServiceResult> updateDisc(IDisc disc);
+    Optional<MediaServiceResult> removeDisk(IDisc disc);
 
 }
