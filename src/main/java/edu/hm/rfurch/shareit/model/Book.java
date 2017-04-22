@@ -49,7 +49,7 @@ public class Book extends BaseMedium implements IBook{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
+        if(!super.equals(o)) return false;
         Book book = (Book) o;
 
         if (!author.equals(book.author)) return false;
@@ -64,7 +64,10 @@ public class Book extends BaseMedium implements IBook{
     }
 
     @Override
-    public String toString() {
-        return null;
+    public String toString(){
+        return new StringBuilder()
+                .append("ISBN: " + this.getIsbn() + " - ")
+            .append("Title: " + this.getTitle() + " - ")
+            .append("Author: " + this.getAuthor()).toString();
     }
 }

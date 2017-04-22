@@ -18,6 +18,16 @@ public abstract class BaseMedium implements IMedium {
     }
 
     public abstract int hashCode();
-    public abstract boolean equals(Object object);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BaseMedium that = (BaseMedium) o;
+
+        return title.equals(that.title);
+    }
+
     public abstract String toString();
 }

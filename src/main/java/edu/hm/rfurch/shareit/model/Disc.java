@@ -61,7 +61,11 @@ public class Disc extends BaseMedium implements IDisc {
 
     @Override
     public String toString() {
-        return null;
+        return new StringBuilder()
+                .append("Barcode: " + this.getBarcode() + " - ")
+                .append("Title: " + this.getTitle() + " - ")
+                .append("Director: " + this.getDirector() + " - ")
+                .append("Fsk: " + this.getFsk()).toString();
     }
 
     @Override

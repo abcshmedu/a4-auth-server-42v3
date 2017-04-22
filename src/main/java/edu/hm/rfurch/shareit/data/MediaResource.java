@@ -32,8 +32,6 @@ public class MediaResource implements IData {
         }
         else
             result = Optional.of(false);
-
-
         return result;
 
     }
