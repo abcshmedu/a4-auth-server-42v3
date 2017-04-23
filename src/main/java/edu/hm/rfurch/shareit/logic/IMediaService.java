@@ -23,4 +23,6 @@ public interface IMediaService {
     Optional<MediaServiceResult> updateDisc(IDisc disc);
     Optional<MediaServiceResult> removeDisk(IDisc disc);
 
+    Optional<MediaServiceResult> getMediums();
+
 }
