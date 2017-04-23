@@ -1,8 +1,13 @@
 package edu.hm.rfurch.shareit.tests.logic;
 
 import edu.hm.rfurch.shareit.logic.MediaServiceResult;
+import edu.hm.rfurch.shareit.model.Disc;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Admin on 22.04.2017.
@@ -43,5 +48,21 @@ public class MediaServiceResultTest {
         Assert.assertEquals(400, re.getCode());
         Assert.assertEquals(400, re.getResponse().getStatus());
         Assert.assertEquals("OutboundJaxrsResponse{status=400, reason=Bad Request, hasEntity=true, closed=false, buffered=false}", re.getResponse().toString());
+    }
+
+    @Test
+    public void teaRequestValues(){
+        MediaServiceResult re = MediaServiceResult.IamATeapot;
+        Assert.assertEquals("I'm a teapot", re.getStatus());
+        Assert.assertEquals(418, re.getCode());
+        Assert.assertEquals(418, re.getResponse().getStatus());
+        Assert.assertEquals("OutboundJaxrsResponse{status=418, reason=, hasEntity=true, closed=false, buffered=false}", re.getResponse().toString());
+    }
+
+    @Test
+    public void serilizeContentTest(){
+        MediaServiceResult re = MediaServiceResult.OK;
+        re.setResponseData(new Disc("t","b","d",1));
+        System.out.println((new JSONObject(re.getResponse()).get("entity").toString());
     }
 }
