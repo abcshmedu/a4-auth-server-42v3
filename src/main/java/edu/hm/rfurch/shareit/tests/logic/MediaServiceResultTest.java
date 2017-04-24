@@ -89,6 +89,6 @@ public class MediaServiceResultTest {
         discs.add(new Book("t4","b4","d4"));
         discs.add(new Book("t5","b5","d5"));
         re.setResponseData(discs);
-        Assert.assertEquals("{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"b1\",\"isbn\":\"d1\",\"title\":\"t1\"},{\"author\":\"b2\",\"isbn\":\"d2\",\"title\":\"t2\"},{\"author\":\"b3\",\"isbn\":\"d3\",\"title\":\"t3\"},{\"author\":\"b4\",\"isbn\":\"d4\",\"title\":\"t4\"},{\"author\":\"b5\",\"isbn\":\"d5\",\"title\":\"t5\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}", new JSONObject(re.getResponse()).get("entity").toString());
+        Assert.assertEquals("{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"b1\",\"isbn\":\"d1\",\"title\":\"t1\"},{\"author\":\"b2\",\"isbn\":\"d2\",\"title\":\"t2\"},{\"author\":\"b3\",\"isbn\":\"d3\",\"title\":\"t3\"},{\"author\":\"b4\",\"isbn\":\"d4\",\"title\":\"t4\"},{\"author\":\"b5\",\"isbn\":\"d5\",\"title\":\"t5\"}],\"message\":\"OK\",\"data-length\":5,\"status\":200}", new JSONObject(re.getResponse()).get("entity").toString());
     }
 }

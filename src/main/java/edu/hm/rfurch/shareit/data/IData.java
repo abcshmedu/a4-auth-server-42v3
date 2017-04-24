@@ -13,18 +13,27 @@ import java.util.stream.Collectors;
  */
 public interface IData {
 
-    default Optional<IDisc> getDisc(String barcode){
-        return this.getDiscs().get().stream().filter(d -> d.getBarcode().equals(barcode)).findAny();
+    default Optional<IMedium> getDisc(String barcode) {
+        return this.getDiscs().get().stream()
+                .filter(IDisc.class::isInstance)
+                .map(IDisc.class::cast)
+                .filter(d -> d.getBarcode().equals(barcode))
+                .map(IMedium.class::cast).findAny();
     }
-    default Optional<IBook> getBook(String isbn){
-        return this.getBooks().get().stream().filter(b -> b.getIsbn().equals(isbn)).findAny();
+    default Optional<IMedium> getBook(String isbn){
+        return this.getBooks().get().stream()
+                .filter(IBook.class::isInstance)
+                .map(IBook.class::cast)
+                .filter(b -> b.getIsbn().equals(isbn))
+                .map(IMedium.class::cast)
+                .findAny();
     }
-    default Optional<List<IBook>> getBooks(){
+    default Optional<List<IMedium>> getBooks(){
         return Optional.of(this.getMediums().stream()
                 .filter(m -> m instanceof IBook)
                 .map(m -> (IBook)m).collect(Collectors.toList()));
     }
-    default Optional<List<IDisc>> getDiscs(){
+    default Optional<List<IMedium>> getDiscs(){
         return Optional.of(this.getMediums().stream().filter(m -> m instanceof IDisc)
                 .map(m -> (IDisc)m).collect(Collectors.toList()));
     }

@@ -44,9 +44,9 @@ public class MediaService implements IMediaService {
     public Optional<MediaServiceResult> updateBook(IBook book) {
         if(book == null)
             throw new NullPointerException();
-        Optional<IBook> oFullBook = ResourceManager.dataAccess().getBook(book.getIsbn());
+        Optional<IMedium> oFullBook = ResourceManager.dataAccess().getBook(book.getIsbn());
         if(oFullBook.isPresent()){
-            Optional<IBook> updatedBook = oFullBook.get().update(book);
+            Optional<IBook> updatedBook = ((IBook)oFullBook.get()).update(book);
             if(updatedBook.isPresent()){
                 ResourceManager.dataAccess().remove(oFullBook.get());
                 ResourceManager.dataAccess().add(updatedBook.get());
@@ -93,9 +93,9 @@ public class MediaService implements IMediaService {
     public Optional<MediaServiceResult> updateDisc(IDisc disc) {
         if(disc == null)
             throw new NullPointerException();
-        Optional<IDisc> oFullDisc = ResourceManager.dataAccess().getDisc(disc.getBarcode());
+        Optional<IMedium> oFullDisc = ResourceManager.dataAccess().getDisc(disc.getBarcode());
         if(oFullDisc.isPresent()){
-            Optional<IDisc> updatedDisc = oFullDisc.get().update(disc);
+            Optional<IDisc> updatedDisc = ((IDisc)oFullDisc.get()).update(disc);
             if(updatedDisc.isPresent()){
                 ResourceManager.dataAccess().remove(oFullDisc.get());
                 ResourceManager.dataAccess().add(updatedDisc.get());
