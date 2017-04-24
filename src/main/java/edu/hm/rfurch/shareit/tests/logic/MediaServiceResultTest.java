@@ -5,6 +5,8 @@ import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.Disc;
 import edu.hm.rfurch.shareit.model.IBook;
 import edu.hm.rfurch.shareit.model.IDisc;
+import edu.hm.rfurch.shareit.model.IMedium;
+
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
@@ -80,7 +82,7 @@ public class MediaServiceResultTest {
     @Test
     public void serilizeContentListTest(){
         MediaServiceResult re = MediaServiceResult.OK;
-        List<IBook> discs = new ArrayList<>();
+        List<IMedium> discs = new ArrayList<>();
         discs.add(new Book("t1","b1","d1"));
         discs.add(new Book("t2","b2","d2"));
         discs.add(new Book("t3","b3","d3"));
