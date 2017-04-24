@@ -1,7 +1,7 @@
 package edu.hm.rfurch.shareit.tests.logic;
 
-import edu.hm.rfurch.shareit.data.ResourceManager;
 import edu.hm.rfurch.shareit.logic.MediaService;
+import edu.hm.rfurch.shareit.logic.MediaServiceResult;
 import edu.hm.rfurch.shareit.model.*;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class MediaServiceTest {
         expects.add(new Book("Title1", "Author1", "1"));
         expects.add(new Disc("Disc1", "Code1", "Dirctor1", 1));
 
-        Collection<? extends IMedium> actuals = new MediaService().getMediums().get().getResponseData();
+        Collection<IMedium> actuals = new MediaService().getMediums().get().getResponseData();
         Assert.assertArrayEquals(expects.toArray(), actuals.toArray());
     }
 
@@ -50,22 +50,24 @@ public class MediaServiceTest {
         Assert.assertTrue(actual.isPresent());
         Assert.assertEquals(expect,actual.get());
     }
-   /** @Test
+    @Test
     public void getDiscByBarcodeFromDefaultValuesNotExists(){
-        Optional<IDisc> actual =  ResourceManager.dataAccess().getDisc("No");
+        IDisc expect = new Disc("", "No", "", 1);
+        Optional<MediaServiceResult> actual =   new MediaService().getDisc(expect);
         Assert.assertFalse(actual.isPresent());
     }
 
     @Test
     public void getBookByIsbnFromDefaultValuesExists(){
         IBook expect = new Book("Title1", "Author1", "1");
-        Optional<IBook> actual =  ResourceManager.dataAccess().getBook("1");
+        Optional<IMedium> actual =  new MediaService().getBook(expect).get().getResponseData().stream().findAny();
         Assert.assertTrue(actual.isPresent());
         Assert.assertEquals(expect,actual.get());
     }
     @Test
     public void getBookByIsbnFromDefaultValuesNotExists(){
-        Optional<IBook> actual =  ResourceManager.dataAccess().getBook("No");
+        IBook expect = new Book("Title1", "Author1", "No");
+        Optional<MediaServiceResult> actual =  new MediaService().getBook(expect);
         Assert.assertFalse(actual.isPresent());
     }
     // </editor-fold>
@@ -74,53 +76,45 @@ public class MediaServiceTest {
     @Test
     public void addABookAndDeleteIt(){
         IBook expect = new Book("Title2", "Author2", "2");
-        ResourceManager.dataAccess().add(expect);
-        Optional<IBook> actual =  ResourceManager.dataAccess().getBook("2");
+        new MediaService().addBook(expect);
+        Optional<IMedium> actual =  new MediaService().getBook(expect).get().getResponseData().stream().findAny();
 
         Assert.assertEquals(expect,actual.get());
-        Assert.assertEquals(expect,ResourceManager.dataAccess().getBooks().get().stream().filter(f -> f.getIsbn().equals("2")).findAny().get());
-        Assert.assertEquals(expect,ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
+        Assert.assertEquals(expect,new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("2")).findAny().get());
+        Assert.assertEquals(expect,new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
 
-        ResourceManager.dataAccess().remove(expect);
+        new MediaService().removeBook(expect);
 
-        Optional<IBook> actual2 =  ResourceManager.dataAccess().getBook("2");
+        Optional<IMedium> actual2 =  new MediaService().getBook(expect).get().getResponseData().stream().findAny();
         Assert.assertFalse(actual2.isPresent());
-        Assert.assertFalse(ResourceManager.dataAccess().getBooks().get().stream().filter(f -> f.getIsbn().equals("2")).findAny().isPresent());
-        Assert.assertFalse(ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().isPresent());
+        Assert.assertFalse(new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("2")).findAny().isPresent());
+        Assert.assertFalse(new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Title2")).findAny().isPresent());
 
     }
 
     @Test
     public void addADiscAndDeleteIt(){
         IDisc expect = new Disc("Disc2", "Code2", "Dirctor2", 1);
-        ResourceManager.dataAccess().add(expect);
-        Optional<IDisc> actual =  ResourceManager.dataAccess().getDisc("Code2");
+        new MediaService().addDisc(expect);
+        Optional<IMedium> actual = new MediaService().getDisc(expect).get().getResponseData().stream().findAny();
 
         Assert.assertEquals(expect,actual.get());
-        Assert.assertEquals(expect,ResourceManager.dataAccess().getDiscs().get().stream().filter(f -> f.getBarcode().equals("Code2")).findAny().get());
-        Assert.assertEquals(expect,ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().get());
+        Assert.assertEquals(expect,new MediaService().getDiscs().get().getResponseData().stream().filter(IDisc.class::isInstance)
+                .map(IDisc.class::cast).filter(f -> f.getBarcode().equals("Code2")).findAny().get());
+        Assert.assertEquals(expect,new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().get());
 
-        ResourceManager.dataAccess().remove(expect);
+        new MediaService().removeDisk(expect);
 
-        Optional<IDisc> actual2 =  ResourceManager.dataAccess().getDisc("Code2");
+        Optional<MediaServiceResult> actual2 =  new MediaService().getDisc(expect);
         Assert.assertFalse(actual2.isPresent());
-        Assert.assertFalse(ResourceManager.dataAccess().getDiscs().get().stream().filter(f -> f.getBarcode().equals("Code2")).findAny().isPresent());
-        Assert.assertFalse(ResourceManager.dataAccess().getDiscs().get().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().isPresent());
+        Assert.assertFalse(new MediaService().getDiscs().isPresent());
+        Assert.assertFalse(new MediaService().getDiscs().get().getResponseData().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().isPresent());
     }
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Clear">
-    @Test
-    public void checkIfClearWorks() {
-        ResourceManager.dataAccess().clear();
-        Assert.assertEquals(0, ResourceManager.dataAccess().getMediums().size());
-        Assert.assertEquals(0, ResourceManager.dataAccess().getBooks().get().size());
-        Assert.assertEquals(0, ResourceManager.dataAccess().getDiscs().get().size());
 
-        ResourceManager.dataAccess().add(new Book("Title1", "Author1", "1"));
-        ResourceManager.dataAccess().add(new Disc("Disc1", "Code1", "Dirctor1", 1));
-    }
-    // </editor-fold>
-    **/
+
 
 }
