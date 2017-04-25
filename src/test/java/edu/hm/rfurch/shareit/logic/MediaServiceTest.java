@@ -1,4 +1,4 @@
-package edu.hm.rfurch.shareit.tests.logic;
+package edu.hm.rfurch.shareit.logic;
 
 import edu.hm.rfurch.shareit.logic.MediaService;
 import edu.hm.rfurch.shareit.logic.MediaServiceResult;

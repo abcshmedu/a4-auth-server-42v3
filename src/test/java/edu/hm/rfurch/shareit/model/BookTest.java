@@ -1,4 +1,4 @@
-package edu.hm.rfurch.shareit.tests.model;
+package edu.hm.rfurch.shareit.model;
 
 import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.IBook;
