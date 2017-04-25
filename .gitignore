@@ -3,7 +3,7 @@
 *.class
 .settings/
 .idea/
-target
+target/
 
 #IntelliJ
 out/
