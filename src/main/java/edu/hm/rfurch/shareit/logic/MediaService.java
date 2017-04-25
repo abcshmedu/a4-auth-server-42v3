@@ -35,10 +35,10 @@ public class MediaService implements IMediaService {
                 ResourceManager.dataAccess().getBooks().orElse(new ArrayList<>())));
     }
 
-    //@GET
-    //@Path("/books/{isbn}")
+    @GET
+    @Path("/books/{isbn}")
     @Override
-    public Optional<MediaServiceResult> getBook(String isbn) {
+    public Optional<MediaServiceResult> getBook(@PathParam("isbn") String isbn) {
         if(isbn == null)
             throw new NullPointerException();
         Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getBook(isbn);
