@@ -63,7 +63,8 @@ public enum MediaServiceResult {
                 .put("message", this.getStatus())
                 .put("data-length", this.getResponseData() != null?this.getResponseData().size():-1)
                 .put("data", this.getResponseData() != null?this.getResponseData().size()>0?this.getResponseData():"":"error") // TODO json serilize
-                .put("help", "http://lmgtfy.com/?q=http+statuscode+"+this.getCode()))
+                .put("help", "http://lmgtfy.com/?q=http+statuscode+"+this.getCode())
+                .toString())
                 .build();
     }
 
