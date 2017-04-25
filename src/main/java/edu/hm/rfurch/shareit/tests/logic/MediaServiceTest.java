@@ -55,21 +55,21 @@ public class MediaServiceTest {
     @Test
     public void getDiscByBarcodeFromDefaultValuesNotExists(){
         IDisc expect = new Disc("", "No", "", 1);
-        Optional<MediaServiceResult> actual =   new MediaService().getDisc(expect);
+        Optional<MediaServiceResult> actual =   new MediaService().getDisc(expect.getBarcode());
         Assert.assertFalse(actual.isPresent());
     }
 
     @Test
     public void getBookByIsbnFromDefaultValuesExists(){
         IBook expect = new Book("Title1", "Author1", "1");
-        Optional<IMedium> actual =  new MediaService().getBook(expect).get().getResponseData().stream().findAny();
+        Optional<IMedium> actual =  new MediaService().getBook(expect.getIsbn()).get().getResponseData().stream().findAny();
         Assert.assertTrue(actual.isPresent());
         Assert.assertEquals(expect,actual.get());
     }
     @Test
     public void getBookByIsbnFromDefaultValuesNotExists(){
         IBook expect = new Book("Title1", "Author1", "No");
-        Optional<MediaServiceResult> actual =  new MediaService().getBook(expect);
+        Optional<MediaServiceResult> actual =  new MediaService().getBook(expect.getIsbn());
         Assert.assertFalse(actual.isPresent());
     }
     // </editor-fold>
@@ -79,7 +79,7 @@ public class MediaServiceTest {
     public void addABookAndDeleteIt(){
         IBook expect = new Book("Title2", "Author2", "2");
         new MediaService().addBook(expect);
-        Optional<IMedium> actual =  new MediaService().getBook(expect).get().getResponseData().stream().findAny();
+        Optional<IMedium> actual =  new MediaService().getBook(expect.getIsbn()).get().getResponseData().stream().findAny();
 
         Assert.assertEquals(expect,actual.get());
         Assert.assertEquals(expect,new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
@@ -88,7 +88,7 @@ public class MediaServiceTest {
 
         new MediaService().removeBook(expect);
 
-        Optional<MediaServiceResult> actual2 =  new MediaService().getBook(expect);
+        Optional<MediaServiceResult> actual2 =  new MediaService().getBook(expect.getIsbn());
         Assert.assertFalse(actual2.isPresent());
         Assert.assertFalse(new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
                 .map(IBook.class::cast).filter(f -> f.getIsbn().equals("2")).findAny().isPresent());
@@ -100,7 +100,7 @@ public class MediaServiceTest {
     public void addADiscAndDeleteIt(){
         IDisc expect = new Disc("Disc2", "Code2", "Dirctor2", 1);
         new MediaService().addDisc(expect);
-        Optional<IMedium> actual = new MediaService().getDisc(expect).get().getResponseData().stream().findAny();
+        Optional<IMedium> actual = new MediaService().getDisc(expect.getBarcode()).get().getResponseData().stream().findAny();
 
         Assert.assertEquals(expect,actual.get());
         Assert.assertEquals(expect,new MediaService().getDiscs().get().getResponseData().stream().filter(IDisc.class::isInstance)
@@ -110,7 +110,7 @@ public class MediaServiceTest {
 
         new MediaService().removeDisk(expect);
 
-        Optional<MediaServiceResult> actual2 =  new MediaService().getDisc(expect);
+        Optional<MediaServiceResult> actual2 =  new MediaService().getDisc(expect.getBarcode());
         Assert.assertFalse(actual2.isPresent());
         Assert.assertFalse(new MediaService().getDiscs().get().getResponseData().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().isPresent());
     }

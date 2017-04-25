@@ -13,13 +13,13 @@ public interface IMediaService {
 
     Optional<MediaServiceResult> addBook(IBook book);
     Optional<MediaServiceResult> getBooks();
-    Optional<MediaServiceResult> getBook(IBook book);
+    Optional<MediaServiceResult> getBook(String isbn);
     Optional<MediaServiceResult> updateBook(IBook book);
     Optional<MediaServiceResult> removeBook(IBook book);
 
     Optional<MediaServiceResult> addDisc(IDisc disc);
     Optional<MediaServiceResult> getDiscs();
-    Optional<MediaServiceResult> getDisc(IDisc disc);
+    Optional<MediaServiceResult> getDisc(String barcode);
     Optional<MediaServiceResult> updateDisc(IDisc disc);
     Optional<MediaServiceResult> removeDisk(IDisc disc);
 

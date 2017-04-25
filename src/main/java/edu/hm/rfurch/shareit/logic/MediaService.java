@@ -5,15 +5,19 @@ import edu.hm.rfurch.shareit.model.IBook;
 import edu.hm.rfurch.shareit.model.IDisc;
 import edu.hm.rfurch.shareit.model.IMedium;
 
+
+import javax.ws.rs.*;
 import java.util.ArrayList;
 import java.util.Optional;
 
 /**
  * Created by FURCH on 19/04/2017.
  */
+@Path("/media")
 public class MediaService implements IMediaService {
 
-
+    @PUT
+    @Path("/books")
     @Override
     public Optional<MediaServiceResult> addBook(IBook book) {
         if(book == null)
@@ -23,21 +27,27 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
+    @GET
+    @Path("/books")
     @Override
     public Optional<MediaServiceResult> getBooks() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
                 ResourceManager.dataAccess().getBooks().orElse(new ArrayList<>())));
     }
 
+    @GET
+    @Path("/books/{isbn}")
     @Override
-    public Optional<MediaServiceResult> getBook(IBook book) {
-        if(book == null)
+    public Optional<MediaServiceResult> getBook(String isbn) {
+        if(isbn == null)
             throw new NullPointerException();
-        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getBook(book.getIsbn());
+        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getBook(isbn);
         return oMediaServiceResult.isPresent()?Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())):Optional.empty();
 
     }
 
+    @POST
+    @Path("/books/{isbn}")
     @Override
     public Optional<MediaServiceResult> updateBook(IBook book) {
         if(book == null)
@@ -54,6 +64,7 @@ public class MediaService implements IMediaService {
         return Optional.of(MediaServiceResult.BadRequest);
     }
 
+    @DELETE
     @Override
     public Optional<MediaServiceResult> removeBook(IBook book) {
         if(book == null)
@@ -63,6 +74,7 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
+    @POST
     @Override
     public Optional<MediaServiceResult> addDisc(IDisc disc) {
         if(disc == null)
@@ -72,6 +84,7 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
+    @GET
     @Override
     public Optional<MediaServiceResult> getDiscs() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
@@ -79,14 +92,16 @@ public class MediaService implements IMediaService {
         ));
     }
 
+    @GET
     @Override
-    public Optional<MediaServiceResult> getDisc(IDisc disc) {
-        if(disc == null)
+    public Optional<MediaServiceResult> getDisc(String barcode) {
+        if(barcode == null)
             throw new NullPointerException();
-        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getDisc(disc.getBarcode());
+        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getDisc(barcode);
         return oMediaServiceResult.isPresent()?Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())):Optional.empty();
     }
 
+    @PUT
     @Override
     public Optional<MediaServiceResult> updateDisc(IDisc disc) {
         if(disc == null)
@@ -112,6 +127,7 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
+    @DELETE
     @Override
     public Optional<MediaServiceResult> getMediums() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
