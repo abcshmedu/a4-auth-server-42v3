@@ -7,6 +7,7 @@ import edu.hm.rfurch.shareit.model.IMedium;
 
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -37,6 +38,7 @@ public class MediaService implements IMediaService {
 
     @GET
     @Path("/books/{isbn}")
+    @Produces(MediaType.APPLICATION_JSON)
     @Override
     public Optional<MediaServiceResult> getBook(@PathParam("isbn") String isbn) {
         if(isbn == null)
