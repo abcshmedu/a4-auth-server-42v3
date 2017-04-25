@@ -7,7 +7,6 @@ import edu.hm.rfurch.shareit.model.IMedium;
 
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -17,8 +16,6 @@ import java.util.Optional;
 
 public class MediaService implements IMediaService {
 
-    //@PUT
-    //@Path("/books")
     @Override
     public Optional<MediaServiceResult> addBook(IBook book) {
         if(book == null)
@@ -44,8 +41,6 @@ public class MediaService implements IMediaService {
 
     }
 
-    //@POST
-    //@Path("/books/{isbn}")
     @Override
     public Optional<MediaServiceResult> updateBook(IBook book) {
         if(book == null)
@@ -62,7 +57,6 @@ public class MediaService implements IMediaService {
         return Optional.of(MediaServiceResult.BadRequest);
     }
 
-    //@DELETE
     @Override
     public Optional<MediaServiceResult> removeBook(IBook book) {
         if(book == null)
@@ -72,7 +66,6 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
-    //@POST
     @Override
     public Optional<MediaServiceResult> addDisc(IDisc disc) {
         if(disc == null)
@@ -82,7 +75,6 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
-    //@GET
     @Override
     public Optional<MediaServiceResult> getDiscs() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
@@ -90,7 +82,6 @@ public class MediaService implements IMediaService {
         ));
     }
 
-    //@GET
     @Override
     public Optional<MediaServiceResult> getDisc(String barcode) {
         if(barcode == null)
@@ -99,7 +90,6 @@ public class MediaService implements IMediaService {
         return oMediaServiceResult.isPresent()?Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())):Optional.empty();
     }
 
-   // @PUT
     @Override
     public Optional<MediaServiceResult> updateDisc(IDisc disc) {
         if(disc == null)
