@@ -1,6 +1,9 @@
 package edu.hm.rfurch.shareit.restapi;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -20,11 +23,23 @@ import edu.hm.rfurch.shareit.model.Disc;
 @Path("/media")
 public class MediaRest {
 	
+	/*
     @GET
     @Path("/books")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBooks() {
         return new MediaService().getBooks().get().getResponse();
+    }
+	*/
+
+    @GET
+    @Path("/books")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Book[] getBooks() {
+    	List<Book> oBooks = new MediaService().getBooks().get().getResponseData().stream().filter(book -> book instanceof Book).map(book -> (Book)book).collect(Collectors.toList());
+    	Book[] books = new Book[oBooks.size()];
+    	oBooks.toArray(books);
+        return books;
     }
 	
     @GET
