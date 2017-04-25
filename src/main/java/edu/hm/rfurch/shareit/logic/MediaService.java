@@ -16,8 +16,8 @@ import java.util.Optional;
 @Path("/media")
 public class MediaService implements IMediaService {
 
-    @PUT
-    @Path("/books")
+    //@PUT
+    //@Path("/books")
     @Override
     public Optional<MediaServiceResult> addBook(IBook book) {
         if(book == null)
@@ -27,16 +27,16 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
-    @GET
-    @Path("/books")
+    //@GET
+    //@Path("/books")
     @Override
     public Optional<MediaServiceResult> getBooks() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
                 ResourceManager.dataAccess().getBooks().orElse(new ArrayList<>())));
     }
 
-    @GET
-    @Path("/books/{isbn}")
+    //@GET
+    //@Path("/books/{isbn}")
     @Override
     public Optional<MediaServiceResult> getBook(String isbn) {
         if(isbn == null)
@@ -46,8 +46,8 @@ public class MediaService implements IMediaService {
 
     }
 
-    @POST
-    @Path("/books/{isbn}")
+    //@POST
+    //@Path("/books/{isbn}")
     @Override
     public Optional<MediaServiceResult> updateBook(IBook book) {
         if(book == null)
@@ -64,7 +64,7 @@ public class MediaService implements IMediaService {
         return Optional.of(MediaServiceResult.BadRequest);
     }
 
-    @DELETE
+    //@DELETE
     @Override
     public Optional<MediaServiceResult> removeBook(IBook book) {
         if(book == null)
@@ -74,7 +74,7 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
-    @POST
+    //@POST
     @Override
     public Optional<MediaServiceResult> addDisc(IDisc disc) {
         if(disc == null)
@@ -84,7 +84,7 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
-    @GET
+    //@GET
     @Override
     public Optional<MediaServiceResult> getDiscs() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
@@ -92,7 +92,7 @@ public class MediaService implements IMediaService {
         ));
     }
 
-    @GET
+    //@GET
     @Override
     public Optional<MediaServiceResult> getDisc(String barcode) {
         if(barcode == null)
@@ -101,7 +101,7 @@ public class MediaService implements IMediaService {
         return oMediaServiceResult.isPresent()?Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())):Optional.empty();
     }
 
-    @PUT
+   // @PUT
     @Override
     public Optional<MediaServiceResult> updateDisc(IDisc disc) {
         if(disc == null)
@@ -127,7 +127,7 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
-    @DELETE
+    @GET
     @Override
     public Optional<MediaServiceResult> getMediums() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
