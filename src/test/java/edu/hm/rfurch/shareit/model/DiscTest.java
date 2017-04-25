@@ -1,7 +1,5 @@
 package edu.hm.rfurch.shareit.model;
 
-import edu.hm.rfurch.shareit.model.Disc;
-import edu.hm.rfurch.shareit.model.IDisc;
 import org.junit.Assert;
 import org.junit.Test;
 

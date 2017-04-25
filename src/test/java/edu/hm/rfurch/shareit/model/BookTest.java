@@ -1,7 +1,5 @@
 package edu.hm.rfurch.shareit.model;
 
-import edu.hm.rfurch.shareit.model.Book;
-import edu.hm.rfurch.shareit.model.IBook;
 import org.junit.Assert;
 import org.junit.Test;
 
