@@ -1,6 +1,5 @@
-package edu.hm.rfurch.shareit.tests.data;
+package edu.hm.rfurch.shareit.data;
 
-import edu.hm.rfurch.shareit.data.ResourceManager;
 import edu.hm.rfurch.shareit.model.*;
 import org.junit.Assert;
 import org.junit.Test;

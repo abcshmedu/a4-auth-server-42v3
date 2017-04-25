@@ -1,6 +1,5 @@
-package edu.hm.rfurch.shareit.tests.logic;
+package edu.hm.rfurch.shareit.logic;
 
-import edu.hm.rfurch.shareit.logic.MediaServiceResult;
 import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.Disc;
 import edu.hm.rfurch.shareit.model.IBook;
