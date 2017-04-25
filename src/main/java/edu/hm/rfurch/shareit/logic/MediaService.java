@@ -28,8 +28,6 @@ public class MediaService implements IMediaService {
                 MediaServiceResult.BadRequest);
     }
 
-    //@GET
-    //@Path("/books")
     @Override
     public Optional<MediaServiceResult> getBooks() {
         return Optional.of(MediaServiceResult.OK.setResponseData(

@@ -15,7 +15,7 @@ import java.util.Optional;
 /**
  * Created by rapha on 25.04.2017.
  */
-@Path("/media")
+@Path("/test")
 public class TestRestApiJodel {
 
 	public TestRestApiJodel() {
