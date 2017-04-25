@@ -14,7 +14,7 @@ import java.util.Optional;
 /**
  * Created by FURCH on 19/04/2017.
  */
-@Path("/media")
+
 public class MediaService implements IMediaService {
 
     //@PUT
@@ -36,9 +36,7 @@ public class MediaService implements IMediaService {
                 ResourceManager.dataAccess().getBooks().orElse(new ArrayList<>())));
     }
 
-    @GET
-    @Path("/books/{isbn}")
-    @Produces(MediaType.APPLICATION_JSON)
+
     @Override
     public Optional<MediaServiceResult> getBook(@PathParam("isbn") String isbn) {
         if(isbn == null)
