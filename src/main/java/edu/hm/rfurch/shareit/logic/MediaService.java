@@ -33,8 +33,8 @@ public class MediaService implements IMediaService {
     public Optional<MediaServiceResult> getBook(IBook book) {
         if(book == null)
             throw new NullPointerException();
-        return Optional.of(MediaServiceResult.OK.setResponseData(
-                ResourceManager.dataAccess().getBook(book.getIsbn()).get()));
+        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getBook(book.getIsbn());
+        return oMediaServiceResult.isPresent()?Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())):Optional.empty();
 
     }
 
@@ -83,8 +83,8 @@ public class MediaService implements IMediaService {
     public Optional<MediaServiceResult> getDisc(IDisc disc) {
         if(disc == null)
             throw new NullPointerException();
-        return Optional.of(MediaServiceResult.OK.setResponseData(
-                ResourceManager.dataAccess().getDisc(disc.getBarcode()).get()));
+        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getDisc(disc.getBarcode());
+        return oMediaServiceResult.isPresent()?Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())):Optional.empty();
     }
 
     @Override

@@ -3,6 +3,7 @@ package edu.hm.rfurch.shareit.tests.logic;
 import edu.hm.rfurch.shareit.logic.MediaService;
 import edu.hm.rfurch.shareit.logic.MediaServiceResult;
 import edu.hm.rfurch.shareit.model.*;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,6 +25,7 @@ public class MediaServiceTest {
         expects.add(new Disc("Disc1", "Code1", "Dirctor1", 1));
 
         Collection<IMedium> actuals = new MediaService().getMediums().get().getResponseData();
+        System.out.println(new JSONObject(new MediaService().getMediums().get().getResponse()).get("entity").toString());
         Assert.assertArrayEquals(expects.toArray(), actuals.toArray());
     }
 
@@ -86,7 +88,7 @@ public class MediaServiceTest {
 
         new MediaService().removeBook(expect);
 
-        Optional<IMedium> actual2 =  new MediaService().getBook(expect).get().getResponseData().stream().findAny();
+        Optional<MediaServiceResult> actual2 =  new MediaService().getBook(expect);
         Assert.assertFalse(actual2.isPresent());
         Assert.assertFalse(new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
                 .map(IBook.class::cast).filter(f -> f.getIsbn().equals("2")).findAny().isPresent());
@@ -105,11 +107,11 @@ public class MediaServiceTest {
                 .map(IDisc.class::cast).filter(f -> f.getBarcode().equals("Code2")).findAny().get());
         Assert.assertEquals(expect,new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().get());
 
+
         new MediaService().removeDisk(expect);
 
         Optional<MediaServiceResult> actual2 =  new MediaService().getDisc(expect);
         Assert.assertFalse(actual2.isPresent());
-        Assert.assertFalse(new MediaService().getDiscs().isPresent());
         Assert.assertFalse(new MediaService().getDiscs().get().getResponseData().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().isPresent());
     }
     // </editor-fold>
