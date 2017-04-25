@@ -18,6 +18,10 @@ import java.util.Optional;
 @Path("/media")
 public class TestRestApiJodel {
 
+	public TestRestApiJodel() {
+		
+	}
+	
     @GET
     @Path("/books/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -25,10 +29,14 @@ public class TestRestApiJodel {
         if(isbn == null)
             throw new NullPointerException();
        Optional<MediaServiceResult> oBook = new MediaService().getBook(isbn);
-
        return oBook.isPresent()?oBook.get().getResponse():MediaServiceResult.BadRequest.getResponse();
 
-
-
+    }
+    
+    @GET
+    @Path("/hello")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String helloWorld() {
+      return "Hello, world!";
     }
 }
