@@ -1,6 +1,5 @@
 package edu.hm.rfurch.shareit.restapi;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,18 +19,17 @@ import edu.hm.rfurch.shareit.logic.MediaServiceResult;
 import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.Disc;
 
+/**
+ * 
+ * @author Raphael Furch, rfurch@hm.edu / Michael Schmid, m.schmid@hm.edu
+ *
+ */
 @Path("/media")
 public class MediaRest {
-	
-	/*
-    @GET
-    @Path("/books")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getBooks() {
-        return new MediaService().getBooks().get().getResponse();
-    }
-	*/
-
+    /**
+     * 
+     * @return
+     */
     @GET
     @Path("/books")
     @Produces(MediaType.APPLICATION_JSON)
@@ -41,13 +39,18 @@ public class MediaRest {
     	oBooks.toArray(books);
         return books;
     }
-	
+
+    /**
+     * 
+     * @param isbn
+     * @return
+     */
     @GET
     @Path("/books/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getBook(@PathParam("isbn") String isbn) {
     	Response result = MediaServiceResult.BadRequest.getResponse();
-        if(isbn != null) {
+        if (isbn != null) {
         	Optional<MediaServiceResult> oBook = new MediaService().getBook(isbn);
         	result = oBook.isPresent() ? oBook.get().getResponse() : MediaServiceResult.BadRequest.getResponse();
         }
@@ -55,6 +58,11 @@ public class MediaRest {
     }
     
     
+    /**
+     * 
+     * @param book
+     * @return
+     */
     @POST
     @Path("/books")
     @Produces(MediaType.APPLICATION_JSON)
@@ -69,20 +77,30 @@ public class MediaRest {
     	return result;
     }
     
+    /**
+     * 
+     * @param book
+     * @param isbn
+     * @return
+     */
     @PUT
     @Path("/books/{isbn}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateBook(Book book, @PathParam("isbn") String isbn) {
-    	Response result;
-    	if(book != null && book.getIsbn().equals(isbn)) {
-    		result = new MediaService().updateBook(book).get().getResponse();
-    	} else {
-			result = MediaServiceResult.BadRequest.getResponse();
-		}
-    	return result;
+        Response result;
+        if (book != null && book.getIsbn().equals(isbn)) {
+            result = new MediaService().updateBook(book).get().getResponse();
+        } else {
+            result = MediaServiceResult.BadRequest.getResponse();
+        }
+        return result;
     }
     
+    /**
+     * 
+     * @return
+     */
     @GET
     @Path("/discs")
     @Produces(MediaType.APPLICATION_JSON)
@@ -90,18 +108,28 @@ public class MediaRest {
         return new MediaService().getDiscs().get().getResponse();
     }
     
+    /**
+     * 
+     * @param barcode
+     * @return
+     */
     @GET
     @Path("/discs/{barcode}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDisc(@PathParam("barcode") String barcode) {
     	Response result = MediaServiceResult.BadRequest.getResponse();
-        if(barcode != null) {
+        if (barcode != null) {
         	Optional<MediaServiceResult> oBook = new MediaService().getDisc(barcode);
         	result = oBook.isPresent() ? oBook.get().getResponse() : MediaServiceResult.BadRequest.getResponse();
         }
        return result;
     }
     
+    /**
+     * 
+     * @param disc
+     * @return
+     */
     @POST
     @Path("/discs")
     @Produces(MediaType.APPLICATION_JSON)
@@ -116,13 +144,19 @@ public class MediaRest {
     	return result;
     }
     
+    /**
+     * 
+     * @param disc
+     * @param barcode
+     * @return
+     */
     @PUT
     @Path("/discs/{barcode}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateDisc(Disc disc, @PathParam("barcode") String barcode) {
     	Response result;
-    	if(disc != null && disc.getBarcode().equals(barcode)) {
+    	if (disc != null && disc.getBarcode().equals(barcode)) {
     		result = new MediaService().updateDisc(disc).get().getResponse();
     	} else {
 			result = MediaServiceResult.BadRequest.getResponse();
@@ -130,6 +164,10 @@ public class MediaRest {
     	return result;
     }
     
+    /**
+     * 
+     * @return
+     */
     @GET
     @Path("/mediums")
     @Produces(MediaType.APPLICATION_JSON)

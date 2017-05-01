@@ -106,7 +106,7 @@ public class MediaServiceTest {
         Assert.assertEquals(expect,new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().get());
 
 
-        new MediaService().removeDisk(expect);
+        new MediaService().removeDisc(expect);
 
         Optional<MediaServiceResult> actual2 =  new MediaService().getDisc(expect.getBarcode());
         Assert.assertFalse(actual2.isPresent());

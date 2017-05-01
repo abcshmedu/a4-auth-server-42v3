@@ -1,13 +1,20 @@
 package edu.hm.rfurch.shareit.model;
 
 /**
- * Created by rapha on 12.04.2017.
+ * 
+ * @author Raphael Furch, rfurch@hm.edu / Michael Schmid, m.schmid@hm.edu
+ *
  */
 public class Copy implements ICopy {
-
-    public Copy(String owner, IMedium medium){
-        if(medium == null)
+    /**
+     * Ctor to create an exemplar of a medium.
+     * @param owner of the copy
+     * @param medium of which the copy is an exemplar
+     */
+    public Copy(String owner, IMedium medium) {
+        if (medium == null) {
             throw new IllegalArgumentException("Can not copy a not existing medium.");
+        }
         this.medium = medium;
         this.owner = owner;
     }

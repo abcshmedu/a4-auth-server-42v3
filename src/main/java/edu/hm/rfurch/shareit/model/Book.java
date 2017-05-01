@@ -3,21 +3,33 @@ package edu.hm.rfurch.shareit.model;
 import java.util.Optional;
 
 /**
- * Created by rapha on 12.04.2017.
+ * 
+ * @author Raphael Furch, rfurch@hm.edu / Michael Schmid, m.schmid@hm.edu
+ *
  */
-public class Book extends BaseMedium implements IBook{
+public class Book extends BaseMedium implements IBook {
+    /**
+     * Ctor to create a book object with title, author and isbn.
+     * @param title of the book
+     * @param author of the book
+     * @param isbn of the book
+     */
     public Book(String title, String author, String isbn) {
         super(title);
-        if(isbn == null)
+        if (isbn == null) {
             throw new IllegalArgumentException("ISBN = null is bad.");
         // TODO check for ISBN-13
+        }
         this.author = author;
         this.isbn = isbn;
     }
 
+    /**
+     * Ctor used by jackson.
+     */
     @SuppressWarnings("unused") // Constructor for Reflection
-	private Book(){
-        this("","","");
+    private Book() {
+        this("", "", "");
     }
 
 
@@ -36,10 +48,10 @@ public class Book extends BaseMedium implements IBook{
     @Override
     public Optional<IBook> update(IBook book) {
         Optional<IBook> result = Optional.empty();
-        if(book != null && this.getIsbn().equals(book.getIsbn())){
+        if (book != null && this.getIsbn().equals(book.getIsbn())) {
             result = Optional.of(new Book(
-                    book.getTitle()!= null?book.getTitle():this.getTitle(),
-                    book.getAuthor()!= null?book.getAuthor():this.getAuthor(),
+                    book.getTitle() != null ? book.getTitle() : this.getTitle(),
+                    book.getAuthor() != null ? book.getAuthor() : this.getAuthor(),
                     this.getIsbn()));
         }
         return result;
@@ -47,12 +59,20 @@ public class Book extends BaseMedium implements IBook{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if(!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         Book book = (Book) o;
 
-        if (!author.equals(book.author)) return false;
+        if (!author.equals(book.author)) {
+            return false;
+        }
         return isbn.equals(book.isbn);
     }
 
@@ -64,7 +84,7 @@ public class Book extends BaseMedium implements IBook{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return new StringBuilder()
                 .append("ISBN: " + this.getIsbn() + " - ")
             .append("Title: " + this.getTitle() + " - ")

@@ -8,8 +8,14 @@ import org.eclipse.jetty.webapp.*;
  * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
  *
  */
-public class JettyStarter {
-
+public final class JettyStarter {
+    /**
+     * Look constructor.
+     */
+    private JettyStarter() {
+        super();
+    }
+    
     public static final String APP_URL = "/";
     public static final int PORT = 8082;
     public static final String WEBAPP_DIR = "./src/main/webapp/";
