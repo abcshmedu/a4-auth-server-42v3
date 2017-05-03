@@ -23,7 +23,9 @@ public class MediaServiceTest {
         expects.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
 
         Collection<IMedium> actuals = new MediaService().getMediums().get().getResponseData();
+        System.out.println("-----------");
         System.out.println(new JSONObject(new MediaService().getMediums().get().getResponse()).get("entity").toString());
+        System.out.println("-----------");
         Assert.assertArrayEquals(expects.toArray(), actuals.toArray());
     }
 
@@ -38,14 +40,14 @@ public class MediaServiceTest {
     @Test
     public void getDiscsFromDefaultValues(){
         List<IDisc> expects = new ArrayList<>();
-        expects.add(new Disc("Disc1", "Code1", "Dirctor1", 1));
+        expects.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
         Collection<? extends IMedium> actuals = new MediaService().getDiscs().get().getResponseData();
         Assert.assertArrayEquals(expects.toArray(),actuals.toArray());
     }
 
     @Test
     public void getDiscByBarcodeFromDefaultValuesExists(){
-        IDisc expect = new Disc("Disc1", "Code1", "Dirctor1", 1);
+        IDisc expect = new Disc("Disc1", "4059251015567", "Dirctor1", 1);
         Optional<IMedium> actual =  new MediaService().getDiscs().get().getResponseData().stream().findFirst();
         Assert.assertTrue(actual.isPresent());
         Assert.assertEquals(expect,actual.get());
@@ -96,13 +98,13 @@ public class MediaServiceTest {
 
     @Test
     public void addADiscAndDeleteIt(){
-        IDisc expect = new Disc("Disc2", "Code2", "Dirctor2", 1);
+        IDisc expect = new Disc("Disc2", "5055011702189", "Dirctor2", 1);
         new MediaService().addDisc(expect);
         Optional<IMedium> actual = new MediaService().getDisc(expect.getBarcode()).get().getResponseData().stream().findAny();
 
         Assert.assertEquals(expect,actual.get());
         Assert.assertEquals(expect,new MediaService().getDiscs().get().getResponseData().stream().filter(IDisc.class::isInstance)
-                .map(IDisc.class::cast).filter(f -> f.getBarcode().equals("Code2")).findAny().get());
+                .map(IDisc.class::cast).filter(f -> f.getBarcode().equals("5055011702189")).findAny().get());
         Assert.assertEquals(expect,new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().get());
 
 

@@ -16,6 +16,6 @@ public interface IMedium {
      * Check if the medium is valid.
      * @return if the medium is valid
      */
-    boolean isValid();
+    boolean valid();
 
 }

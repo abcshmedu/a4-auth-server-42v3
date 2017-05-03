@@ -28,7 +28,7 @@ public class MediaResource implements IData {
     @Override
     public Optional<Boolean> add(IMedium medium) {
         Optional<Boolean> result;
-        if (medium != null && medium.isValid() && !getMediaDatabase().contains(medium)) {
+        if (medium != null && medium.valid() && !getMediaDatabase().contains(medium)) {
             getMediaDatabase().add(medium);
             result = Optional.of(true);
         } else {

@@ -77,7 +77,7 @@ public interface IBook extends IMedium {
     }
     
     @Override
-    default boolean isValid() {
+    default boolean valid() {
         return hasValidISBN();
     }
 }

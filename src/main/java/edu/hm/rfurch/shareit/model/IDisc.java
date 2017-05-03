@@ -78,7 +78,7 @@ public interface IDisc extends IMedium {
     }
     
     @Override
-    default boolean isValid() {
+    default boolean valid() {
         return hasValidEAN();
     }
 }
