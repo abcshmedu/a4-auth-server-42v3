@@ -17,7 +17,7 @@ public class MediaResource implements IData {
     protected MediaResource() {
         mediaDatabase = new ArrayList<>();
         mediaDatabase.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
-        mediaDatabase.add(new Disc("Disc1", "Code1", "Dirctor1", 1));
+        mediaDatabase.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
     }
 
     @Override

@@ -16,21 +16,21 @@ public class DiscTest {
 
     @Test
     public void checkSettingFinalVars(){
-        IDisc b = new Disc("eins", "zwei", "drei", 7);
+        IDisc b = new Disc("eins", "4059251015567", "drei", 7);
         Assert.assertEquals("eins",b.getTitle());
-        Assert.assertEquals("zwei",b.getBarcode());
+        Assert.assertEquals("4059251015567",b.getBarcode());
         Assert.assertEquals("drei",b.getDirector());
         Assert.assertEquals((Integer)7,b.getFsk());
     }
 
     @Test
     public void checkEqual(){
-        IDisc b1 = new Disc("eins", "zwei", "drei", 1);
-        IDisc b2 = new Disc("eins", "zwei", "drei", 1);
-        IDisc c1 = new Disc("eins1", "zwei", "drei",1);
-        IDisc c2 = new Disc("eins", "zwei1", "drei", 1);
-        IDisc c3 = new Disc("eins", "zwei", "drei1",1);
-        IDisc c4 = new Disc("eins", "zwei", "drei",42);
+        IDisc b1 = new Disc("eins", "5055011702189", "drei", 1);
+        IDisc b2 = new Disc("eins", "5055011702189", "drei", 1);
+        IDisc c1 = new Disc("eins1", "5055011702189", "drei",1);
+        IDisc c2 = new Disc("eins", "4059251015567", "drei", 1);
+        IDisc c3 = new Disc("eins", "5055011702189", "drei1",1);
+        IDisc c4 = new Disc("eins", "5055011702189", "drei",42);
 
         Assert.assertEquals(b1,b1);
         Assert.assertEquals(b1,b2);
@@ -51,16 +51,16 @@ public class DiscTest {
 
     @Test
     public void checkEasyUpdate(){
-        IDisc b1 = new Disc("1", "2", "3",1);
-        IDisc b1Tmp = new Disc("1", "2", "3",1);
-        IDisc b2 = new Disc("5", "2", "3",2);
-        IDisc b2Tmp = new Disc("5", "2", "3",2);
+        IDisc b1 = new Disc("1", "5055011702189", "3",1);
+        IDisc b1Tmp = new Disc("1", "5055011702189", "3",1);
+        IDisc b2 = new Disc("5", "5055011702189", "3",2);
+        IDisc b2Tmp = new Disc("5", "5055011702189", "3",2);
 
         Optional<IDisc> oDisc = b1.update(b2);
         Assert.assertTrue(oDisc.isPresent());
 
         Assert.assertEquals("5",oDisc.get().getTitle());
-        Assert.assertEquals("2",oDisc.get().getBarcode());
+        Assert.assertEquals("5055011702189",oDisc.get().getBarcode());
         Assert.assertEquals("3",oDisc.get().getDirector());
         Assert.assertEquals((Integer)2,oDisc.get().getFsk());
 
@@ -71,10 +71,10 @@ public class DiscTest {
 
     @Test
     public void checkEasyUpdateNotSameBook(){
-        IDisc b1 = new Disc("1", "2", "3",1);
-        IDisc b1Tmp = new Disc("1", "2", "3",1);
-        IDisc b2 = new Disc("5", "4", "4",1);
-        IDisc b2Tmp = new Disc("5", "4", "4",1);
+        IDisc b1 = new Disc("1", "4059251015567", "3",1);
+        IDisc b1Tmp = new Disc("1", "4059251015567", "3",1);
+        IDisc b2 = new Disc("5", "5055011702189", "4",1);
+        IDisc b2Tmp = new Disc("5", "5055011702189", "4",1);
 
         Optional<IDisc> oDisc = b1.update(b2);
         Assert.assertFalse(oDisc.isPresent());
@@ -86,10 +86,10 @@ public class DiscTest {
 
     @Test
     public void checkHashCode(){
-        IDisc b1 = new Disc("1", "2", "3",1);
-        IDisc b1Tmp = new Disc("1", "2", "3",1);
-        IDisc b2 = new Disc("4", "5", "6",2);
-        IDisc b2Tmp = new Disc("4", "5", "6",2);
+        IDisc b1 = new Disc("1", "4059251015567", "3",1);
+        IDisc b1Tmp = new Disc("1", "4059251015567", "3",1);
+        IDisc b2 = new Disc("4", "5055011702189", "6",2);
+        IDisc b2Tmp = new Disc("4", "5055011702189", "6",2);
 
         Assert.assertEquals(b1.hashCode(), b1Tmp.hashCode());
         Assert.assertEquals(b2.hashCode(), b2Tmp.hashCode());
@@ -101,11 +101,11 @@ public class DiscTest {
 
     @Test
     public void checkToString(){
-        IDisc b1 = new Disc("1", "2", "3",1);
-        IDisc b2 = new Disc("4", "5", "6",2);
+        IDisc b1 = new Disc("1", "4059251015567", "3",1);
+        IDisc b2 = new Disc("4", "5055011702189", "6",2);
 
-        Assert.assertEquals("Barcode: 2 - Title: 1 - Director: 3 - Fsk: 1", b1.toString());
-        Assert.assertEquals("Barcode: 5 - Title: 4 - Director: 6 - Fsk: 2", b2.toString());
+        Assert.assertEquals("Barcode: 4059251015567 - Title: 1 - Director: 3 - Fsk: 1", b1.toString());
+        Assert.assertEquals("Barcode: 5055011702189 - Title: 4 - Director: 6 - Fsk: 2", b2.toString());
 
 
     }

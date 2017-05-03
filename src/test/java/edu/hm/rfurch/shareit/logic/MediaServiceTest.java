@@ -20,7 +20,7 @@ public class MediaServiceTest {
     public void getMediumsFromDefaultValues(){
         List<IMedium> expects = new ArrayList<>();
         expects.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
-        expects.add(new Disc("Disc1", "Code1", "Dirctor1", 1));
+        expects.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
 
         Collection<IMedium> actuals = new MediaService().getMediums().get().getResponseData();
         System.out.println(new JSONObject(new MediaService().getMediums().get().getResponse()).get("entity").toString());
