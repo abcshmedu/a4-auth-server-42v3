@@ -23,7 +23,7 @@ public class MediaResourceTest {
     @Test
     public void getMediumsFromDefaultValues(){
         List<IMedium> expects = new ArrayList<>();
-        expects.add(new Book("Title1", "Author1", "1"));
+        expects.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
         expects.add(new Disc("Disc1", "Code1", "Dirctor1", 1));
         List<IMedium> actuals =  ResourceManager.dataAccess().getMediums();
         Assert.assertArrayEquals(expects.toArray(),actuals.toArray());
@@ -32,7 +32,7 @@ public class MediaResourceTest {
     @Test
     public void getBooksFromDefaultValues(){
         List<IBook> expects = new ArrayList<>();
-        expects.add(new Book("Title1", "Author1", "1"));
+        expects.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
         List<IMedium> actuals =  ResourceManager.dataAccess().getBooks().get();
         Assert.assertArrayEquals(expects.toArray(),actuals.toArray());
     }
@@ -60,8 +60,8 @@ public class MediaResourceTest {
 
     @Test
     public void getBookByIsbnFromDefaultValuesExists(){
-        IBook expect = new Book("Title1", "Author1", "1");
-        Optional<IMedium> actual =  ResourceManager.dataAccess().getBook("1");
+        IBook expect = new Book("Title1", "Author1", "978-3-86680-192-9");
+        Optional<IMedium> actual =  ResourceManager.dataAccess().getBook("978-3-86680-192-9");
         Assert.assertTrue(actual.isPresent());
         Assert.assertEquals(expect,actual.get());
     }
@@ -75,21 +75,21 @@ public class MediaResourceTest {
     // <editor-fold defaultstate="collapsed" desc="Add">
     @Test
     public void addABookAndDeleteIt(){
-        IBook expect = new Book("Title2", "Author2", "2");
+        IBook expect = new Book("Title2", "Author2", "978-3-8369-4917-0");
         ResourceManager.dataAccess().add(expect);
-        Optional<IMedium> actual =  ResourceManager.dataAccess().getBook("2");
+        Optional<IMedium> actual =  ResourceManager.dataAccess().getBook("978-3-8369-4917-0");
 
         Assert.assertEquals(expect,actual.get());
         Assert.assertEquals(expect,ResourceManager.dataAccess().getBooks().get().stream().filter(IBook.class::isInstance)
-                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("2")).findAny().get());
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("978-3-8369-4917-0")).findAny().get());
         Assert.assertEquals(expect,ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
 
         ResourceManager.dataAccess().remove(expect);
 
-        Optional<IMedium> actual2 =  ResourceManager.dataAccess().getBook("2");
+        Optional<IMedium> actual2 =  ResourceManager.dataAccess().getBook("978-3-8369-4917-0");
         Assert.assertFalse(actual2.isPresent());
         Assert.assertFalse(ResourceManager.dataAccess().getBooks().get().stream().filter(IBook.class::isInstance)
-                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("2")).findAny().isPresent());
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("978-3-8369-4917-0")).findAny().isPresent());
         Assert.assertFalse(ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().isPresent());
 
     }
@@ -123,7 +123,7 @@ public class MediaResourceTest {
         Assert.assertEquals(0, ResourceManager.dataAccess().getBooks().get().size());
         Assert.assertEquals(0, ResourceManager.dataAccess().getDiscs().get().size());
 
-        ResourceManager.dataAccess().add(new Book("Title1", "Author1", "1"));
+        ResourceManager.dataAccess().add(new Book("Title1", "Author1", "978-3-86680-192-9"));
         ResourceManager.dataAccess().add(new Disc("Disc1", "Code1", "Dirctor1", 1));
     }
     // </editor-fold>
