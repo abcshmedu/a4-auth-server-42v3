@@ -17,19 +17,19 @@ public class BookTest {
 
     @Test
     public void checkSettingFinalVars(){
-        IBook b = new Book("eins", "zwei", "drei");
+        IBook b = new Book("eins", "zwei", "978-3-86680-192-9");
         Assert.assertEquals("eins",b.getTitle());
         Assert.assertEquals("zwei",b.getAuthor());
-        Assert.assertEquals("drei",b.getIsbn());
+        Assert.assertEquals("978-3-86680-192-9",b.getIsbn());
     }
 
     @Test
     public void checkEqual(){
-        IBook b1 = new Book("eins", "zwei", "drei");
-        IBook b2 = new Book("eins", "zwei", "drei");
-        IBook c1 = new Book("eins1", "zwei", "drei");
-        IBook c2 = new Book("eins", "zwei1", "drei");
-        IBook c3 = new Book("eins", "zwei", "drei1");
+        IBook b1 = new Book("eins", "zwei", "978-3-12-732320-7");
+        IBook b2 = new Book("eins", "zwei", "978-3-12-732320-7");
+        IBook c1 = new Book("eins1", "zwei", "978-3-12-732320-7");
+        IBook c2 = new Book("eins", "zwei1", "978-3-12-732320-7");
+        IBook c3 = new Book("eins", "zwei", "978-3-86680-192-9");
 
         Assert.assertEquals(b1,b1);
         Assert.assertEquals(b1,b2);
@@ -47,17 +47,17 @@ public class BookTest {
 
     @Test
     public void checkEasyUpdate(){
-        IBook b1 = new Book("1", "2", "3");
-        IBook b1Tmp = new Book("1", "2", "3");
-        IBook b2 = new Book("5", "4", "3");
-        IBook b2Tmp = new Book("5", "4", "3");
+        IBook b1 = new Book("1", "2", "978-3-86680-192-9");
+        IBook b1Tmp = new Book("1", "2", "978-3-86680-192-9");
+        IBook b2 = new Book("5", "4", "978-3-86680-192-9");
+        IBook b2Tmp = new Book("5", "4", "978-3-86680-192-9");
 
         Optional<IBook> oBook = b1.update(b2);
         Assert.assertTrue(oBook.isPresent());
 
         Assert.assertEquals("5",oBook.get().getTitle());
         Assert.assertEquals("4",oBook.get().getAuthor());
-        Assert.assertEquals("3",oBook.get().getIsbn());
+        Assert.assertEquals("978-3-86680-192-9",oBook.get().getIsbn());
 
         Assert.assertEquals(b1, b1Tmp);
         Assert.assertEquals(b2, b2Tmp);
@@ -65,15 +65,15 @@ public class BookTest {
     }
     @Test
     public void checkEasyUpdateOnlyNullFields(){
-        IBook b1 = new Book("1", "2", "3");
-        IBook b2 = new Book("5", null, "3");
+        IBook b1 = new Book("1", "2", "978-3-86680-192-9");
+        IBook b2 = new Book("5", null, "978-3-86680-192-9");
 
         Optional<IBook> oBook = b1.update(b2);
         Assert.assertTrue(oBook.isPresent());
 
         Assert.assertEquals("5",oBook.get().getTitle());
         Assert.assertEquals("2",oBook.get().getAuthor());
-        Assert.assertEquals("3",oBook.get().getIsbn());
+        Assert.assertEquals("978-3-86680-192-9",oBook.get().getIsbn());
 
 
 
@@ -81,10 +81,10 @@ public class BookTest {
 
     @Test
     public void checkEasyUpdateNotSameBook(){
-        IBook b1 = new Book("1", "2", "3");
-        IBook b1Tmp = new Book("1", "2", "3");
-        IBook b2 = new Book("5", "4", "4");
-        IBook b2Tmp = new Book("5", "4", "4");
+        IBook b1 = new Book("1", "2", "978-3-86680-192-9");
+        IBook b1Tmp = new Book("1", "2", "978-3-86680-192-9");
+        IBook b2 = new Book("5", "4", "978-3-12-732320-7");
+        IBook b2Tmp = new Book("5", "4", "978-3-12-732320-7");
 
         Optional<IBook> oBook = b1.update(b2);
         Assert.assertFalse(oBook.isPresent());
@@ -96,10 +96,10 @@ public class BookTest {
 
     @Test
     public void checkHashCode(){
-        IBook b1 = new Book("1", "2", "3");
-        IBook b1Tmp = new Book("1", "2", "3");
-        IBook b2 = new Book("4", "5", "6");
-        IBook b2Tmp = new Book("4", "5", "6");
+        IBook b1 = new Book("1", "2", "978-3-86680-192-9");
+        IBook b1Tmp = new Book("1", "2", "978-3-86680-192-9");
+        IBook b2 = new Book("4", "5", "978-3-12-732320-7");
+        IBook b2Tmp = new Book("4", "5", "978-3-12-732320-7");
 
         Assert.assertEquals(b1.hashCode(), b1Tmp.hashCode());
         Assert.assertEquals(b2.hashCode(), b2Tmp.hashCode());
@@ -111,12 +111,45 @@ public class BookTest {
 
     @Test
     public void checkToString(){
-        IBook b1 = new Book("1", "2", "3");
-        IBook b2 = new Book("4", "5", "6");
+        IBook b1 = new Book("1", "2", "978-3-86680-192-9");
+        IBook b2 = new Book("4", "5", "978-3-12-732320-7");
 
-        Assert.assertEquals("ISBN: 3 - Title: 1 - Author: 2", b1.toString());
-        Assert.assertEquals("ISBN: 6 - Title: 4 - Author: 5", b2.toString());
-
-
+        Assert.assertEquals("ISBN: 978-3-86680-192-9 - Title: 1 - Author: 2", b1.toString());
+        Assert.assertEquals("ISBN: 978-3-12-732320-7 - Title: 4 - Author: 5", b2.toString());
+    }
+    
+    @Test
+    public void isbnCheckValid() {
+    	Assert.assertTrue(IBook.validISBN("978-3-86680-192-9"));
+    }
+    
+    @Test
+    public void isbnCheckValidZeroChecksum() {
+    	Assert.assertTrue(IBook.validISBN("978-3-8369-4917-0"));
+    }
+    
+    @Test
+    public void isbnCheckInValidChecksum() {
+    	Assert.assertFalse(IBook.validISBN("978-3-86680-192-8"));
+    }
+    
+    @Test
+    public void isbnCheckInValid() {
+    	Assert.assertFalse(IBook.validISBN("978-3-87680-192-9"));
+    }
+    
+    @Test
+    public void isbnCheckText() {
+    	Assert.assertFalse(IBook.validISBN("Text"));
+    }
+    
+    @Test
+    public void isbnCheckFourParts() {
+    	Assert.assertFalse(IBook.validISBN("978-3-192-3"));
+    }
+    
+    @Test
+    public void isbnCheckToShort() {
+    	Assert.assertFalse(IBook.validISBN("978-3-86680-92-8"));
     }
 }

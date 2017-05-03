@@ -19,7 +19,7 @@ public class MediaServiceTest {
     @Test
     public void getMediumsFromDefaultValues(){
         List<IMedium> expects = new ArrayList<>();
-        expects.add(new Book("Title1", "Author1", "1"));
+        expects.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
         expects.add(new Disc("Disc1", "Code1", "Dirctor1", 1));
 
         Collection<IMedium> actuals = new MediaService().getMediums().get().getResponseData();
@@ -30,7 +30,7 @@ public class MediaServiceTest {
     @Test
     public void getBooksFromDefaultValues(){
         List<IBook> expects = new ArrayList<>();
-        expects.add(new Book("Title1", "Author1", "1"));
+        expects.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
         Collection<? extends IMedium> actuals = new MediaService().getBooks().get().getResponseData();
         Assert.assertArrayEquals(expects.toArray(),actuals.toArray());
     }
@@ -59,14 +59,14 @@ public class MediaServiceTest {
 
     @Test
     public void getBookByIsbnFromDefaultValuesExists(){
-        IBook expect = new Book("Title1", "Author1", "1");
+        IBook expect = new Book("Title1", "Author1", "978-3-86680-192-9");
         Optional<IMedium> actual =  new MediaService().getBook(expect.getIsbn()).get().getResponseData().stream().findAny();
         Assert.assertTrue(actual.isPresent());
         Assert.assertEquals(expect,actual.get());
     }
     @Test
     public void getBookByIsbnFromDefaultValuesNotExists(){
-        IBook expect = new Book("Title1", "Author1", "No");
+        IBook expect = new Book("Title1", "Author1", "978-3-8369-4231-7");
         Optional<MediaServiceResult> actual =  new MediaService().getBook(expect.getIsbn());
         Assert.assertFalse(actual.isPresent());
     }
@@ -75,13 +75,13 @@ public class MediaServiceTest {
     // <editor-fold defaultstate="collapsed" desc="Add">
     @Test
     public void addABookAndDeleteIt(){
-        IBook expect = new Book("Title2", "Author2", "2");
+        IBook expect = new Book("Title2", "Author2", "978-3-12-732320-7");
         new MediaService().addBook(expect);
         Optional<IMedium> actual =  new MediaService().getBook(expect.getIsbn()).get().getResponseData().stream().findAny();
 
         Assert.assertEquals(expect,actual.get());
         Assert.assertEquals(expect,new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
-                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("2")).findAny().get());
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("978-3-12-732320-7")).findAny().get());
         Assert.assertEquals(expect,new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
 
         new MediaService().removeBook(expect);
@@ -89,7 +89,7 @@ public class MediaServiceTest {
         Optional<MediaServiceResult> actual2 =  new MediaService().getBook(expect.getIsbn());
         Assert.assertFalse(actual2.isPresent());
         Assert.assertFalse(new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
-                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("2")).findAny().isPresent());
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("978-3-12-732320-7")).findAny().isPresent());
         Assert.assertFalse(new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Title2")).findAny().isPresent());
 
     }
