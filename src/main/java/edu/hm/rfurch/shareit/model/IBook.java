@@ -67,4 +67,12 @@ public interface IBook extends IMedium {
         }
         return result;
     }
+    
+    /**
+     * Check if the ISBN of the book is valid.
+     * @return if the ISBN is valid
+     */
+    default boolean hasValidISBN() {
+        return validISBN(getIsbn());
+    }
 }

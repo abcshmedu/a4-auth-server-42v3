@@ -19,9 +19,9 @@ public class Book extends BaseMedium implements IBook {
         if (isbn == null) {
             throw new IllegalArgumentException("ISBN = null is bad.");
         }
-        if (!IBook.validISBN(isbn)) {
-            throw new IllegalArgumentException("ISBN is invalid");
-        }
+        //if (!IBook.validISBN(isbn)) {
+        //    throw new IllegalArgumentException("ISBN is invalid");
+        //}
         
         this.author = author;
         this.isbn = isbn;
