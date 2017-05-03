@@ -33,4 +33,9 @@ public interface IDisc extends IMedium {
      * @return an Optional of a disc
      */
     Optional<IDisc> update(IDisc disc);
+    
+    @Override
+    default boolean isValid() {
+        return true;
+    }
 }

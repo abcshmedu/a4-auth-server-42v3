@@ -11,5 +11,11 @@ public interface IMedium {
      * @return title of the medium
      */
     String getTitle();
+    
+    /**
+     * Check if the medium is valid.
+     * @return if the medium is valid
+     */
+    boolean isValid();
 
 }
