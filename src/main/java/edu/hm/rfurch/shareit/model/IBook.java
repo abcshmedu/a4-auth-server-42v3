@@ -51,7 +51,7 @@ public interface IBook extends IMedium {
     static boolean validISBN(String isbn) {
         boolean result = false;
         try {
-            if (isbn.split("-").length == ISBN_PARTS && isbn.replace("-", "").length() == ISBN_LENGTH) {
+            if (isbn.split("-").length <= ISBN_PARTS && isbn.replace("-", "").length() == ISBN_LENGTH) {
                 String isbnNumbers = isbn.replace("-", "");
                 int[] numbers = isbnNumbers.chars()
                         .map(character -> Integer.parseInt(Character.toString((char) character))).toArray();
