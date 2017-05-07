@@ -104,8 +104,11 @@ public class MediaRest {
     @GET
     @Path("/discs")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDiscs() {
-        return new MediaService().getDiscs().get().getResponse();
+    public Disc[] getDiscs() {
+    	List<Disc> oDiscs = new MediaService().getDiscs().get().getResponseData().stream().filter(disc -> disc instanceof Disc).map(disc -> (Disc)disc).collect(Collectors.toList());
+        Disc[] discs = new Disc[oDiscs.size()];
+        oDiscs.toArray(discs);
+        return discs;
     }
     
     /**
