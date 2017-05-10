@@ -83,7 +83,7 @@ public class MediaServiceTest {
 
         Assert.assertEquals(expect,actual.get());
         Assert.assertEquals(expect,new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
-                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("978-3-12-732320-7")).findAny().get());
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("9783127323207")).findAny().get());
         Assert.assertEquals(expect,new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
 
         new MediaService().removeBook(expect);
@@ -91,7 +91,7 @@ public class MediaServiceTest {
         Optional<MediaServiceResult> actual2 =  new MediaService().getBook(expect.getIsbn());
         Assert.assertFalse(actual2.isPresent());
         Assert.assertFalse(new MediaService().getBooks().get().getResponseData().stream().filter(IBook.class::isInstance)
-                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("978-3-12-732320-7")).findAny().isPresent());
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("9783127323207")).findAny().isPresent());
         Assert.assertFalse(new MediaService().getMediums().get().getResponseData().stream().filter(f -> f.getTitle().equals("Title2")).findAny().isPresent());
 
     }

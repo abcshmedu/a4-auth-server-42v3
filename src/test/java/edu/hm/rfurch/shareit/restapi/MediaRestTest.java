@@ -24,7 +24,7 @@ public class MediaRestTest {
 	@Test
 	public void getBookTest() {
 		Response response = new MediaRest().getBook("978-3-86680-192-9");
-		String expected = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"Author1\",\"isbn\":\"978-3-86680-192-9\",\"title\":\"Title1\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
+		String expected = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"Author1\",\"isbn\":\"9783866801929\",\"title\":\"Title1\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
 		String actual = response.getEntity().toString();
 		assertEquals(expected, actual);
 	}
@@ -50,7 +50,7 @@ public class MediaRestTest {
 		Book testObject = new Book("test", "test", "978-3-12-732320-7");
 		Response response = new MediaRest().addBook(testObject);
 		//String expected1 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"Author1\",\"isbn\":\"978-3-86680-192-9\",\"title\":\"Title1\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
-		String expected2 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"test\",\"isbn\":\"978-3-12-732320-7\",\"title\":\"test\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
+		String expected2 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"test\",\"isbn\":\"9783127323207\",\"title\":\"test\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
 		//String actual1 = response.getEntity().toString();
 		String actual2 = new MediaRest().getBook("978-3-12-732320-7").getEntity().toString();
 		ResourceManager.dataAccess().remove(testObject);
@@ -66,8 +66,8 @@ public class MediaRestTest {
 		String actual1 = new MediaRest().getBook("978-3-12-732320-7").getEntity().toString();
 		new MediaRest().updateBook(modified, "978-3-12-732320-7");
 		String actual2 = new MediaRest().getBook("978-3-12-732320-7").getEntity().toString();
-		String expected1 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"test\",\"isbn\":\"978-3-12-732320-7\",\"title\":\"test\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
-		String expected2 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"TEST\",\"isbn\":\"978-3-12-732320-7\",\"title\":\"TEST\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";		
+		String expected1 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"test\",\"isbn\":\"9783127323207\",\"title\":\"test\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
+		String expected2 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"TEST\",\"isbn\":\"9783127323207\",\"title\":\"TEST\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
 		ResourceManager.dataAccess().remove(modified);
 		System.out.println(actual1);
 		System.out.println(expected1);

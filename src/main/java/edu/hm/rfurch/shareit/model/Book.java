@@ -24,7 +24,7 @@ public class Book extends BaseMedium implements IBook {
         //}
         
         this.author = author;
-        this.isbn = isbn;
+        this.isbn = isbn.replace("-","");
     }
 
     /**

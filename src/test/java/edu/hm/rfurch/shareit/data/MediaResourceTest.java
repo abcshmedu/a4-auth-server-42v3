@@ -82,7 +82,7 @@ public class MediaResourceTest {
 
         Assert.assertEquals(expect,actual.get());
         Assert.assertEquals(expect,ResourceManager.dataAccess().getBooks().get().stream().filter(IBook.class::isInstance)
-                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("978-3-8369-4917-0")).findAny().get());
+                .map(IBook.class::cast).filter(f -> f.getIsbn().equals("9783836949170")).findAny().get());
         Assert.assertEquals(expect,ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
 
         ResourceManager.dataAccess().remove(expect);

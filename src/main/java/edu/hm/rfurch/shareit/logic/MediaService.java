@@ -32,11 +32,11 @@ public class MediaService implements IMediaService {
 
 
     @Override
-    public Optional<MediaServiceResult> getBook(@PathParam("isbn") String isbn) {
+    public Optional<MediaServiceResult> getBook(String isbn) {
         if (isbn == null) {
             throw new NullPointerException();
         }
-        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getBook(isbn);
+        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getBook(isbn.replace("-",""));
         return oMediaServiceResult.isPresent() ? Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())) : Optional.empty();
 
     }

@@ -37,7 +37,7 @@ public interface IData {
         return this.getBooks().get().stream()
                 .filter(IBook.class::isInstance)
                 .map(IBook.class::cast)
-                .filter(b -> b.getIsbn().equals(isbn))
+                .filter(b -> b.getIsbn().equals(isbn.replace("-","")))
                 .map(IMedium.class::cast)
                 .findAny();
     }

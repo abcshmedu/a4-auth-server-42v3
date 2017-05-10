@@ -89,7 +89,7 @@ public class MediaRest {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateBook(Book book, @PathParam("isbn") String isbn) {
         Response result;
-        if (book != null && book.getIsbn().equals(isbn)) {
+        if (book != null && book.getIsbn().equals(isbn.replace("-",""))) {
             result = new MediaService().updateBook(book).get().getResponse();
         } else {
             result = MediaServiceResult.BadRequest.getResponse();

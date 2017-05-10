@@ -76,7 +76,7 @@ public class MediaServiceResultTest {
     public void serilizeContentSingleBookTest(){
         MediaServiceResult re = MediaServiceResult.OK;
         re.setResponseData(new Book("t","b","978-3-86680-192-9"));
-        Assert.assertEquals("{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"b\",\"isbn\":\"978-3-86680-192-9\",\"title\":\"t\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}", new JSONObject(re.getResponse()).get("entity").toString());
+        Assert.assertEquals("{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"b\",\"isbn\":\"9783866801929\",\"title\":\"t\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}", new JSONObject(re.getResponse()).get("entity").toString());
     }
 
     @Test
@@ -89,6 +89,6 @@ public class MediaServiceResultTest {
         discs.add(new Book("t4","b4","978-3-8369-4917-0"));
         discs.add(new Book("t5","b5","978-3-8369-5481-5"));
         re.setResponseData(discs);
-        Assert.assertEquals("{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"b1\",\"isbn\":\"978-3-86680-192-9\",\"title\":\"t1\"},{\"author\":\"b2\",\"isbn\":\"978-3-8369-4231-7\",\"title\":\"t2\"},{\"author\":\"b3\",\"isbn\":\"978-3-8369-4150-1\",\"title\":\"t3\"},{\"author\":\"b4\",\"isbn\":\"978-3-8369-4917-0\",\"title\":\"t4\"},{\"author\":\"b5\",\"isbn\":\"978-3-8369-5481-5\",\"title\":\"t5\"}],\"message\":\"OK\",\"data-length\":5,\"status\":200}", new JSONObject(re.getResponse()).get("entity").toString());
+        Assert.assertEquals("{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"b1\",\"isbn\":\"9783866801929\",\"title\":\"t1\"},{\"author\":\"b2\",\"isbn\":\"9783836942317\",\"title\":\"t2\"},{\"author\":\"b3\",\"isbn\":\"9783836941501\",\"title\":\"t3\"},{\"author\":\"b4\",\"isbn\":\"9783836949170\",\"title\":\"t4\"},{\"author\":\"b5\",\"isbn\":\"9783836954815\",\"title\":\"t5\"}],\"message\":\"OK\",\"data-length\":5,\"status\":200}", new JSONObject(re.getResponse()).get("entity").toString());
     }
 }

@@ -20,7 +20,7 @@ public class BookTest {
         IBook b = new Book("eins", "zwei", "978-3-86680-192-9");
         Assert.assertEquals("eins",b.getTitle());
         Assert.assertEquals("zwei",b.getAuthor());
-        Assert.assertEquals("978-3-86680-192-9",b.getIsbn());
+        Assert.assertEquals("9783866801929",b.getIsbn());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class BookTest {
 
         Assert.assertEquals("5",oBook.get().getTitle());
         Assert.assertEquals("4",oBook.get().getAuthor());
-        Assert.assertEquals("978-3-86680-192-9",oBook.get().getIsbn());
+        Assert.assertEquals("9783866801929",oBook.get().getIsbn());
 
         Assert.assertEquals(b1, b1Tmp);
         Assert.assertEquals(b2, b2Tmp);
@@ -73,7 +73,7 @@ public class BookTest {
 
         Assert.assertEquals("5",oBook.get().getTitle());
         Assert.assertEquals("2",oBook.get().getAuthor());
-        Assert.assertEquals("978-3-86680-192-9",oBook.get().getIsbn());
+        Assert.assertEquals("9783866801929",oBook.get().getIsbn());
 
 
 
@@ -114,8 +114,8 @@ public class BookTest {
         IBook b1 = new Book("1", "2", "978-3-86680-192-9");
         IBook b2 = new Book("4", "5", "978-3-12-732320-7");
 
-        Assert.assertEquals("ISBN: 978-3-86680-192-9 - Title: 1 - Author: 2", b1.toString());
-        Assert.assertEquals("ISBN: 978-3-12-732320-7 - Title: 4 - Author: 5", b2.toString());
+        Assert.assertEquals("ISBN: 9783866801929 - Title: 1 - Author: 2", b1.toString());
+        Assert.assertEquals("ISBN: 9783127323207 - Title: 4 - Author: 5", b2.toString());
     }
     
     @Test
