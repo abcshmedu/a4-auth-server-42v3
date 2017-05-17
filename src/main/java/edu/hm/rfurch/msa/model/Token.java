@@ -40,7 +40,11 @@ public class Token {
         return new Integer(this.hashCode()).toString();
     }
 
-    
+    public boolean isLiving(){
+        return (System.currentTimeMillis() - this.getCreateTime() - this.getLiveTime()) < 0;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
