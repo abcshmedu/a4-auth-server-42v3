@@ -20,6 +20,14 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+    public String getName(){
+        return this.name;
+    }
+
+    public boolean isAdmin(){
+        return this.isAdmin;
+    }
+
     @Override
     public String toString(){
         return "User: {name="+ this.name + ", isAdmin=" + this.isAdmin+"}";
@@ -31,8 +39,6 @@ public class User {
         if (!(o instanceof User)) return false;
 
         User user = (User) o;
-
-        if (isAdmin != user.isAdmin) return false;
         if (!name.equals(user.name)) return false;
         return password.equals(user.password);
     }

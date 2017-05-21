@@ -10,18 +10,17 @@ import java.security.NoSuchAlgorithmException;
  */
 public class Token {
 
+    public final static long DEFAULT_TOKEN_LIVE_TIME = 180000;
     private final long createTime;
     private final long liveTime;
-    private final int length;
     private final User owner;
 
-    public Token(User owner, long liveTime, int length){
-        if(owner == null || liveTime <= 0 || length <= 0)
+    public Token(User owner, long liveTime){
+        if(owner == null || liveTime <= 0)
             throw new IllegalArgumentException();
 
         this.liveTime = liveTime;
         this.createTime = System.currentTimeMillis();
-        this.length = length;
         this.owner = owner;
     }
 
@@ -29,12 +28,9 @@ public class Token {
         return this.createTime;
     }
     public long getLiveTime(){
-        return this.createTime;
+        return this.liveTime;
     }
 
-    public int getLength(){
-        return this.length;
-    }
 
     public String getTokenValue(){
         return new Integer(this.hashCode()).toString();
@@ -55,7 +51,6 @@ public class Token {
 
         if (createTime != token.createTime) return false;
         if (liveTime != token.liveTime) return false;
-        if (length != token.length) return false;
         return owner.equals(token.owner);
     }
 
@@ -63,7 +58,6 @@ public class Token {
     public int hashCode() {
         int result = (int) (createTime ^ (createTime >>> 32));
         result = 31 * result + (int) (liveTime ^ (liveTime >>> 32));
-        result = 31 * result + length;
         result = 31 * result + owner.hashCode();
         return result;
     }
