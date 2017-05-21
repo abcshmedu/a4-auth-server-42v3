@@ -23,11 +23,12 @@ public class Resource implements IResource {
 
     @Override
     public boolean exists(String name, String password) {
-        return this.exists(new User(name, password, false));
+        return this.exists(new User(name, password, false)) ||
+                this.exists(new User(name, password, true));
     }
     @Override
     public boolean exists(String name) {
-        return  DATABASE.keySet().stream().filter(f -> f.getName().equals(name)).findAny().isPresent();
+        return DATABASE.keySet().stream().anyMatch(f -> f.getName().equals(name));
     }
 
     @Override
@@ -38,7 +39,7 @@ public class Resource implements IResource {
     @Override
     public Optional<User> getUser(Token token, String password) {
         return DATABASE.entrySet().stream().filter(f -> f.getValue().equals(token)).map(Map.Entry::getKey)
-                .filter(f -> f.equals(new User(f.getName(), password, false))).findFirst();
+                .filter(f -> f.equals(new User(f.getName(), password, f.isAdmin()))).findFirst();
     }
 
     @Override
@@ -48,7 +49,7 @@ public class Resource implements IResource {
 
     @Override
     public void addToken(User user, Token token) {
-        if(DATABASE.values().stream().anyMatch(t -> t.equals(token)))
+        if(DATABASE.values().stream().anyMatch(t -> token.equals(t)))
             throw new IllegalArgumentException("Token already exists.");
         DATABASE.put(user,token);
     }
@@ -68,7 +69,7 @@ public class Resource implements IResource {
     public Map<Token, Boolean> getAllTokenAndRights() {
         return DATABASE.entrySet().stream().filter(f -> f.getValue()!=null)
                 .filter(ff -> ff.getValue().isLiving())
-                .collect(Collectors.toMap(c -> c.getValue(), c -> c.getKey().isAdmin()));
+                .collect(Collectors.toMap(Map.Entry::getValue, c -> c.getKey().isAdmin()));
     }
 
 
@@ -80,7 +81,7 @@ public class Resource implements IResource {
 
     private Optional<Token> getOnlyLivingToken(User user){
         final Token t = DATABASE.get(user);
-        if(t.isLiving())
+        if(t != null && t.isLiving())
             return Optional.of(t);
         else
             return Optional.empty();

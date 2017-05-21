@@ -33,7 +33,7 @@ public class Token {
 
 
     public String getTokenValue(){
-        return new Integer(this.hashCode()).toString();
+        return Integer.toString(this.hashCode());
     }
 
     public boolean isLiving(){
