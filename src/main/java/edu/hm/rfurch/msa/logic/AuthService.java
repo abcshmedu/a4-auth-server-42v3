@@ -61,22 +61,13 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public MsaServiceResult endSession(String tokenValue, String password) {
-        final Optional<Token> oToken = getTokenFromTokenValue(tokenValue);
-        if(oToken.isPresent()){
-            Optional<User> oUser = ResourceManager.dataAccess().getUser(oToken.get(),password);
-            if(oUser.isPresent()){
-                ResourceManager.dataAccess().delToken(oUser.get(), oToken.get());
-                return MsaServiceResult.IamATeapot;
-            }
-            else{
-                return MsaServiceResult.BadRequest.setMessage("Wrong password.");
-            }
+    public MsaServiceResult endSession(String name, String password) {
+        if(ResourceManager.dataAccess().exists(name, password)) {
+        	ResourceManager.dataAccess().delToken(ResourceManager.dataAccess().getUser(name));
+        	return MsaServiceResult.OK.setMessage("User logged out");
+        } else {
+        	return MsaServiceResult.BadRequest.setMessage("User not exists or wrong password.");
         }
-        else{
-            return MsaServiceResult.Forbidden.setMessage("Invalid token.");
-        }
-
     }
 
     private Optional<Token> getTokenFromTokenValue(String tokenValue){
