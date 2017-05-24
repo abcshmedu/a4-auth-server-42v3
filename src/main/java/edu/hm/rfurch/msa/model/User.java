@@ -11,6 +11,10 @@ public class User {
     private final String password;
     private final boolean isAdmin;
 
+    private User() {
+        this("", "", false);
+    }
+
     public User(String name, String password, Boolean isAdmin){
         if(name == null || password == null || isAdmin == null)
             throw new IllegalArgumentException();
