@@ -24,6 +24,7 @@ public enum MsaServiceResult {
 
     private final int code;
     private String status;
+    private String msg;
     private String token;
     
     /**
@@ -63,8 +64,11 @@ public enum MsaServiceResult {
     }
 
     public MsaServiceResult setMessage(String msg){
-        this.status += " (" +msg + ")";
+        this.msg =  msg;
         return this;
+    }
+    private String getMessage(){
+        return msg;
     }
 
 
@@ -82,8 +86,9 @@ public enum MsaServiceResult {
      */
     public javax.ws.rs.core.Response getResponse() {
         final JSONObject json = new JSONObject()
-                .put("status", this.getCode())
-                .put("message", this.getStatus())
+                .put("code", this.getCode())
+                .put("status", this.getStatus())
+                .put("msg", this.getMessage())
                 .put("help", "http://lmgtfy.com/?q=http+statuscode+" + this.getCode());
         if(this.getToken() != null)
             json.put("token",this.getToken());
