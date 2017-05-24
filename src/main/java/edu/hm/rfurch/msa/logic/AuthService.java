@@ -52,7 +52,10 @@ public class AuthService implements IAuthService {
 
     @Override
     public MsaServiceResult proofToken(String tokenValue, boolean asAdmin) {
-        if(ResourceManager.dataAccess().getAllTokenAndRights().get(getTokenFromTokenValue(tokenValue))){
+        final Optional<Token> myToken = getTokenFromTokenValue(tokenValue);
+        if(myToken.isPresent() && ResourceManager.dataAccess().getAllTokenAndRights()
+                .get(myToken.get()))
+        {
             return MsaServiceResult.OK.setMessage(tokenValue);
         }
         else{
@@ -72,6 +75,7 @@ public class AuthService implements IAuthService {
 
     private Optional<Token> getTokenFromTokenValue(String tokenValue){
         return ResourceManager.dataAccess().getAllTokenAndRights().entrySet().stream().map(Map.Entry::getKey)
-                .filter(f -> f.getTokenValue().equals(tokenValue)).findFirst();
+                .filter(ff -> ff != null)
+                .filter(f -> tokenValue.equals(f.getTokenValue())).findFirst();
     }
 }

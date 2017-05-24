@@ -66,7 +66,7 @@ public class ResourceTest {
         ResourceManager.dataAccess().addToken(admin, longLiveToken);
         Assert.assertNotNull(ResourceManager.dataAccess().getToken(admin));
         Assert.assertEquals(longLiveToken, ResourceManager.dataAccess().getToken(admin));
-        ResourceManager.dataAccess().delToken(admin, longLiveToken);
+        ResourceManager.dataAccess().delToken(admin);
         Assert.assertFalse(ResourceManager.dataAccess().hasValidToken(admin));
     }
 
