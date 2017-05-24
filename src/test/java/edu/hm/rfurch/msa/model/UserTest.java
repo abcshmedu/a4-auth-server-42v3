@@ -25,9 +25,10 @@ public class UserTest {
 
     @Test
     public void checkSetter() {
-        final User t = new User("test","test" , true);
+        final User t = new User("test","test2" , true);
         Assert.assertEquals("test", t.getName());
         Assert.assertEquals(true, t.isAdmin());
+        Assert.assertEquals("test2", t.getPassword());
     }
 
     @Test

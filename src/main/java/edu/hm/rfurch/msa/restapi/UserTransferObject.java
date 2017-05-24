@@ -11,7 +11,7 @@ public class UserTransferObject {
         this("","");
     }
 
-    private UserTransferObject(String name, String password) {
+    public UserTransferObject(String name, String password) {
         this.name = name;
         this.password = password;
     }
