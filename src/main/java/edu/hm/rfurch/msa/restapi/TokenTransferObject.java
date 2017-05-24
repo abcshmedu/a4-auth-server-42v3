@@ -5,16 +5,22 @@ package edu.hm.rfurch.msa.restapi;
  */
 public class TokenTransferObject {
     private final String token;
+    private final boolean admin;
 
     private TokenTransferObject() {
-        this("");
+        this("", false);
     }
 
-    private TokenTransferObject(String token) {
+    private TokenTransferObject(String token, boolean admin) {
         this.token = token;
+        this.admin = admin;
     }
 
     public String getToken() {
         return token;
+    }
+
+    public boolean isAdmin() {
+        return admin;
     }
 }

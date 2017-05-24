@@ -31,10 +31,12 @@ public class MsaRest {
     @GET
     @Path("/token")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getToken(User user) {
+    public Response getToken(UserTransferObject user) {
+
         Response result = null;
-        if (ResourceManager.dataAccess().exists(user)) {
-            ResourceManager.dataAccess().getToken(user);
+        if (ResourceManager.dataAccess().exists(user.getName(), user.getPassword())) {
+            //getToken user, password
+            //ResourceManager.dataAccess().getToken(user);
         } else {
             result = null;
         }
@@ -45,6 +47,8 @@ public class MsaRest {
     @Path("/token")
     @Produces(MediaType.APPLICATION_JSON)
     public Response isTokenValid(TokenTransferObject token) {
+        //getUser token
+        ResourceManager.dataAccess().getUser(token.getToken());
         String tokenString = token.getToken();
         return null;
     }
@@ -52,8 +56,15 @@ public class MsaRest {
     @DELETE
     @Path("/token")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response logout(TokenTransferObject token) {
-        
-        return null;
+    public Response logout(UserTransferObject user) {
+        Response result = null;
+        if (ResourceManager.dataAccess().exists(user.getName(), user.getPassword())) {
+            //ResourceManager.dataAccess().getToken(user);
+            //getToken user, password
+            //delToken token
+        } else {
+            result = null;
+        }
+        return result;
     }
 }
