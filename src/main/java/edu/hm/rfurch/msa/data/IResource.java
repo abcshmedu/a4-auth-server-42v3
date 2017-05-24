@@ -21,4 +21,6 @@ public interface IResource {
         boolean hasValidToken(User user);
         Map<Token, Boolean> getAllTokenAndRights();
         Token getToken(User user);
+        int count();
+        void clear();
     }

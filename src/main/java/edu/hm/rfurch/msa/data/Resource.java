@@ -16,11 +16,13 @@ public class Resource implements IResource {
 
     private static Map<User, Token> DATABASE = new HashMap<>();
 
+
+
+    //region Tested
     @Override
     public boolean exists(User user) {
        return DATABASE.containsKey(user);
     }
-
     @Override
     public boolean exists(String name, String password) {
         return this.exists(new User(name, password, false)) ||
@@ -32,24 +34,26 @@ public class Resource implements IResource {
     }
 
     @Override
+    public void addUser(User user) {
+        DATABASE.put(user,null);
+    }
+    @Override
     public User getUser(String name) {
         return DATABASE.keySet().stream().filter(f -> f.getName().equals(name)).findAny().get();
     }
-
     @Override
-    public Optional<User> getUser(Token token, String password) {
-        return DATABASE.entrySet().stream().filter(f -> f.getValue().equals(token)).map(Map.Entry::getKey)
-                .filter(f -> f.equals(new User(f.getName(), password, f.isAdmin()))).findFirst();
+    public int count() {
+        return DATABASE.entrySet().size();
     }
 
     @Override
-    public void addUser(User user) {
-        DATABASE.put(user,null);
+    public void clear() {
+        DATABASE.clear();
     }
 
     @Override
     public void addToken(User user, Token token) {
-        if(DATABASE.values().stream().anyMatch(t -> token.equals(t)))
+        if(DATABASE.values().stream().anyMatch(token::equals))
             throw new IllegalArgumentException("Token already exists.");
         DATABASE.put(user,token);
     }
@@ -58,11 +62,19 @@ public class Resource implements IResource {
     public void delToken(User user, Token token) {
         DATABASE.put(user,null);
     }
-
-
     @Override
     public boolean hasValidToken(User user) {
-       return getOnlyLivingToken(user).isPresent();
+        return getOnlyLivingToken(user).isPresent();
+    }
+    @Override
+    public Token getToken(User user) {
+        return getOnlyLivingToken(user).get();
+    }
+    @Override
+    public Optional<User> getUser(Token token, String password) {
+        return DATABASE.entrySet().stream().filter(f -> token.equals(f.getValue())).map(Map.Entry::getKey)
+                .filter(f -> f.equals(new User(f.getName(), password, f.isAdmin())))
+                .findFirst();
     }
 
     @Override
@@ -71,12 +83,27 @@ public class Resource implements IResource {
                 .filter(ff -> ff.getValue().isLiving())
                 .collect(Collectors.toMap(Map.Entry::getValue, c -> c.getKey().isAdmin()));
     }
+    //endregion
 
 
-    @Override
-    public Token getToken(User user) {
-        return getOnlyLivingToken(user).get();
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     private Optional<Token> getOnlyLivingToken(User user){
@@ -86,4 +113,5 @@ public class Resource implements IResource {
         else
             return Optional.empty();
     }
+
 }
