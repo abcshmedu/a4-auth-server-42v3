@@ -9,7 +9,7 @@ public class User {
 
     private final String name;
     private final String password;
-    private final boolean isAdmin;
+    private final boolean admin;
 
     private User() {
         this("", "", false);
@@ -21,20 +21,24 @@ public class User {
 
         this.name = name;
         this.password = password;
-        this.isAdmin = isAdmin;
+        this.admin = isAdmin;
     }
 
     public String getName(){
         return this.name;
     }
 
+    public String getPassword() {
+        return this.password;
+    }
+
     public boolean isAdmin(){
-        return this.isAdmin;
+        return this.admin;
     }
 
     @Override
     public String toString(){
-        return "User: {name="+ this.name + ", isAdmin=" + this.isAdmin+"}";
+        return "User: {name="+ this.name + ", isAdmin=" + this.admin+"}";
     }
 
     @Override
@@ -51,7 +55,7 @@ public class User {
     public int hashCode() {
         int result = name.hashCode();
         result = 31 * result + password.hashCode();
-        result = 31 * result + (isAdmin ? 1 : 0);
+        result = 31 * result + (admin ? 1 : 0);
         return result;
     }
 }

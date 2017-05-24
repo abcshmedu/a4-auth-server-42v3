@@ -1,6 +1,5 @@
 package edu.hm.rfurch.msa.model;
 
-import com.sun.javafx.binding.SelectBinding;
 import org.junit.Assert;
 import org.junit.Test;
 
