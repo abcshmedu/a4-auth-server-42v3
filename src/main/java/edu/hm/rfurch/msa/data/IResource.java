@@ -17,7 +17,7 @@ public interface IResource {
         Optional<User> getUser(Token token, String password);
         void addUser(User user);
         void addToken(User user, Token token);
-        void delToken(User user, Token token);
+        void delToken(User user);
         boolean hasValidToken(User user);
         Map<Token, Boolean> getAllTokenAndRights();
         Token getToken(User user);

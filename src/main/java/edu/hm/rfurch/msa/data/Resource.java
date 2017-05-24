@@ -59,7 +59,7 @@ public class Resource implements IResource {
     }
 
     @Override
-    public void delToken(User user, Token token) {
+    public void delToken(User user) {
         DATABASE.put(user,null);
     }
     @Override
