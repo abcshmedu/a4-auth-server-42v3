@@ -27,11 +27,14 @@ public class MsaRest {
     	return new AuthService().getToken(user.getName(), user.getPassword()).getResponse();
     }
 
-    @HEAD
-    @Path("/token")
+    @GET
+    @Path("/token/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response isTokenValid(TokenTransferObject token) {
-    	return new AuthService().proofToken(token.getToken(), token.isAdmin()).getResponse();
+    public Response isTokenValid(@PathParam("token") String token, @QueryParam("admin") String admin) {
+    	final boolean isAdmin = admin != null && admin.equals("true") ? true : false;
+    	System.out.println(token);
+    	System.out.println(isAdmin);
+    	return new AuthService().proofToken(token, isAdmin).getResponse();
     }
 
     @DELETE
