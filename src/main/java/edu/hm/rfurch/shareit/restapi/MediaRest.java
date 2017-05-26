@@ -16,8 +16,10 @@ import javax.ws.rs.core.Response;
 
 import edu.hm.rfurch.shareit.logic.MediaService;
 import edu.hm.rfurch.shareit.logic.MediaServiceResult;
+import edu.hm.rfurch.shareit.logic.TokenChecker;
 import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.Disc;
+import edu.hm.rfurch.shareit.model.IMedium;
 
 /**
  * 
@@ -28,32 +30,48 @@ import edu.hm.rfurch.shareit.model.Disc;
 public class MediaRest {
     /**
      * JSON interface to get a list of all books.
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @GET
-    @Path("/books")
+    @Path("/books/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Book[] getBooks() {
-        List<Book> oBooks = new MediaService().getBooks().get().getResponseData().stream().filter(book -> book instanceof Book).map(book -> (Book)book).collect(Collectors.toList());
-        Book[] books = new Book[oBooks.size()];
-        oBooks.toArray(books);
-        return books;
+    public Response getBooks(@PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, false)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
+        }
+        
+        List<IMedium> oBooks = new MediaService().getBooks().get().getResponseData().stream().filter(book -> book instanceof Book).map(book -> (Book)book).collect(Collectors.toList());
+        return MediaServiceResult.OK.setResponseData(oBooks).getResponse();
     }
 
     /**
      * JSON interface to book.
      * @param isbn of the book
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @GET
-    @Path("/books/{isbn}")
+    @Path("/books/{isbn}/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getBook(@PathParam("isbn") String isbn) {
-        Response result = MediaServiceResult.BadRequest.getResponse();
-        if (isbn != null) {
-            Optional<MediaServiceResult> oBook = new MediaService().getBook(isbn);
-            result = oBook.isPresent() ? oBook.get().getResponse() : MediaServiceResult.BadRequest.getResponse();
+    public Response getBook(@PathParam("isbn") String isbn, @PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, false)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
         }
+        
+        Response result = MediaServiceResult.BadRequest.getResponse();
+            if (isbn != null && token != null) {            
+                Optional<MediaServiceResult> oBook = new MediaService().getBook(isbn);
+                result = oBook.isPresent() ? oBook.get().getResponse() : MediaServiceResult.BadRequest.getResponse();
+            }
        return result;
     }
     
@@ -61,13 +79,22 @@ public class MediaRest {
     /**
      * JSON interface to add a book.
      * @param book build by jackson
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @POST
-    @Path("/books")
+    @Path("/books/{token}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addBook(Book book) {
+    public Response addBook(Book book, @PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, false)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
+        }
+        
         Response result;
         try {
             result = new MediaService().addBook(book).get().getResponse();
@@ -81,15 +108,24 @@ public class MediaRest {
      * JSON interface to update a book.
      * @param book build by jackson
      * @param isbn of the book
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @PUT
-    @Path("/books/{isbn}")
+    @Path("/books/{isbn}/{token}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateBook(Book book, @PathParam("isbn") String isbn) {
+    public Response updateBook(Book book, @PathParam("isbn") String isbn, @PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, true)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
+        }
+        
         Response result;
-        if (book != null && book.getIsbn().equals(isbn.replace("-",""))) {
+        if (book != null && book.getIsbn().equals(isbn.replace("-", ""))) {
             result = new MediaService().updateBook(book).get().getResponse();
         } else {
             result = MediaServiceResult.BadRequest.getResponse();
@@ -99,27 +135,43 @@ public class MediaRest {
     
     /**
      * JSON interface to get a list of all discs.
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @GET
-    @Path("/discs")
+    @Path("/discs/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Disc[] getDiscs() {
-    	List<Disc> oDiscs = new MediaService().getDiscs().get().getResponseData().stream().filter(disc -> disc instanceof Disc).map(disc -> (Disc)disc).collect(Collectors.toList());
-        Disc[] discs = new Disc[oDiscs.size()];
-        oDiscs.toArray(discs);
-        return discs;
+    public Response getDiscs(@PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, false)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
+        }
+        
+        List<IMedium> oDiscs = new MediaService().getDiscs().get().getResponseData().stream().filter(disc -> disc instanceof Disc).map(disc -> (Disc)disc).collect(Collectors.toList());
+        return MediaServiceResult.OK.setResponseData(oDiscs).getResponse();
     }
     
     /**
      * JSON interface to get a disc.
      * @param barcode of the disc
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @GET
-    @Path("/discs/{barcode}")
+    @Path("/discs/{barcode}/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDisc(@PathParam("barcode") String barcode) {
+    public Response getDisc(@PathParam("barcode") String barcode, @PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, false)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
+        }
+        
         Response result = MediaServiceResult.BadRequest.getResponse();
         if (barcode != null) {
             Optional<MediaServiceResult> oBook = new MediaService().getDisc(barcode);
@@ -131,13 +183,22 @@ public class MediaRest {
     /**
      * JSON interface to add a disc.
      * @param disc build by jackson
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @POST
-    @Path("/discs")
+    @Path("/discs/{token}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addDisc(Disc disc) {
+    public Response addDisc(Disc disc, @PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, false)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
+        }
+        
         Response result;
         try {
             result = new MediaService().addDisc(disc).get().getResponse();
@@ -151,13 +212,22 @@ public class MediaRest {
      * JSON interface to update a disc.
      * @param disc build by jackson
      * @param barcode of the disc
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @PUT
-    @Path("/discs/{barcode}")
+    @Path("/discs/{barcode}/{token}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateDisc(Disc disc, @PathParam("barcode") String barcode) {
+    public Response updateDisc(Disc disc, @PathParam("barcode") String barcode, @PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, true)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
+        }
+        
         Response result;
         if (disc != null && disc.getBarcode().equals(barcode)) {
             result = new MediaService().updateDisc(disc).get().getResponse();
@@ -169,12 +239,21 @@ public class MediaRest {
     
     /**
      * JSON interface to get a list of mediums.
+     * @param token Token of the user calling the method.
      * @return JSON response
      */
     @GET
-    @Path("/mediums")
+    @Path("/mediums/{token}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getMediums() {
+    public Response getMediums(@PathParam("token") String token) {
+        try {
+            if (!new TokenChecker().checkToken(token, false)) {
+                return MediaServiceResult.Unauthorized.getResponse();
+            }
+        } catch(Exception e) {
+            return MediaServiceResult.IamATeapot.getResponse();
+        }
+        
         return new MediaService().getMediums().get().getResponse();
     }
 

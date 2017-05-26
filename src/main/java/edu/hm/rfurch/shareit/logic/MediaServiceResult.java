@@ -18,9 +18,9 @@ public enum MediaServiceResult {
     Created(Response.SC_CREATED, "Created"),
     NoContent(Response.SC_NO_CONTENT, "No Content"), //After delete
     BadRequest(Response.SC_BAD_REQUEST, "Bad Request"), // Missing information or data
-    IamATeapot(418, "I'm a teapot");
-/* Unauthorized(Response.SC_UNAUTHORIZED, "Unauthorized"),
-    NotFound(Response.SC_NOT_FOUND, "Not Found"),
+    IamATeapot(418, "I'm a teapot"),
+    Unauthorized(Response.SC_UNAUTHORIZED, "Unauthorized");
+/*  NotFound(Response.SC_NOT_FOUND, "Not Found"),
     NotAcceptable(Response.SC_NOT_ACCEPTABLE, "NotAcceptable"),
     Conflict(Response.SC_CONFLICT,"Conflict"),
     InternalServerError(Response.SC_INTERNAL_SERVER_ERROR, "Internal Server Error"),
