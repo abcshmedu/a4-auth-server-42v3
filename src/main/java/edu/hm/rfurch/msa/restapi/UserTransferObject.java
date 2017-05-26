@@ -1,12 +1,23 @@
 package edu.hm.rfurch.msa.restapi;
 
 /**
- * Created by ms1511 on 24.05.17.
+ * @author Raphael Furch, rfurch@hm.edu / Michael Schmid, m.schmid@hm.edu / Elias Porcio
  */
 public class UserTransferObject {
-    private final String name;
+    
+	/**
+	 * name of the user.
+	 */
+	private final String name;
+    
+    /**
+     * password of the user.
+     */
     private final String password;
 
+    /**
+     * Ctor used by jackson.
+     */
     private UserTransferObject() {
         this("","");
     }
