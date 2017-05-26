@@ -29,7 +29,7 @@ public class TokenChecker {
      * @throws UnknownHostException If MSA is not available.
      * @throws IOException If an I/O error occurs between shareIt and MSA.
      */
-    public boolean checkToken(String token, boolean isAdmin) {
+    public boolean checkToken(String token, boolean isAdmin) throws UnknownHostException, IOException {
         try (Socket socket = new Socket("localhost", JettyStarter.PORT);
             BufferedReader fromAuth = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter toAuth = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
@@ -48,7 +48,12 @@ public class TokenChecker {
             
             throw new IOException("No status code in reply");
         } catch(Exception exception) {
-        	return MAGIC_TOKEN.equals(token) ? true : false;
+        	/*
+        	 * for testing
+        	 */
+        	if(MAGIC_TOKEN.equals(token))
+        		return true;
+        	throw exception;
         }
     }
 
