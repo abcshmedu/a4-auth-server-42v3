@@ -49,7 +49,8 @@ public class MsaServiceResultTest {
         MsaServiceResult re = MsaServiceResult.OK;
         final Token t = new Token(user, 1000000);
         re.setToken(t).setMessage("Message");
-        Assert.assertEquals("{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"message\":\"OK (Message)\",\"status\":200,\"token\":\""+t.getTokenValue()+"\"}", new JSONObject(re.getResponse()).get("entity").toString());
+        System.out.println();
+        Assert.assertEquals("{\"msg\":\"Message\",\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"code\":200,\"status\":\"OK\",\"token\":\""+t.getTokenValue()+"\"}", new JSONObject(re.getResponse()).get("entity").toString());
     }
 
 

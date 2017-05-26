@@ -53,8 +53,8 @@ public class AuthService implements IAuthService {
     @Override
     public MsaServiceResult proofToken(String tokenValue, boolean asAdmin) {
         final Optional<Token> myToken = getTokenFromTokenValue(tokenValue);
-        if(myToken.isPresent() && ResourceManager.dataAccess().getAllTokenAndRights()
-                .get(myToken.get()).equals(asAdmin))
+        if(myToken.isPresent() && (ResourceManager.dataAccess().getAllTokenAndRights()
+                .get(myToken.get()) || !asAdmin))
         {
             return MsaServiceResult.OK.setMessage(tokenValue);
         }
@@ -65,9 +65,16 @@ public class AuthService implements IAuthService {
 
     @Override
     public MsaServiceResult endSession(String name, String password) {
-        if(ResourceManager.dataAccess().exists(name, password)) {
-        	ResourceManager.dataAccess().delToken(ResourceManager.dataAccess().getUser(name));
-        	return MsaServiceResult.OK.setMessage("User logged out");
+        if(name != null && !name.trim().equals("") && password != null && !password.trim().equals("") &&
+                ResourceManager.dataAccess().exists(name, password)) {
+            if(ResourceManager.dataAccess().hasValidToken(ResourceManager.dataAccess().getUser(name))){
+                ResourceManager.dataAccess().delToken(ResourceManager.dataAccess().getUser(name));
+                return MsaServiceResult.OK.setMessage("User logged out.");
+            }
+            else{
+                return MsaServiceResult.BadRequest.setMessage("Not logged in.");
+            }
+
         } else {
         	return MsaServiceResult.BadRequest.setMessage("User not exists or wrong password.");
         }

@@ -11,7 +11,7 @@ public class TokenTransferObject {
         this("", false);
     }
 
-    private TokenTransferObject(String token, boolean admin) {
+    public TokenTransferObject(String token, boolean admin) {
         this.token = token;
         this.admin = admin;
     }

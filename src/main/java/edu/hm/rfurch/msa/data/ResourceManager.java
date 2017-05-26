@@ -13,13 +13,7 @@ public final class ResourceManager {
      * Singleton of the stored data.
      */
     private static final IResource DATA = new Resource();
-    
-    /**
-     * Look constructor.
-     */
-    private ResourceManager() {
-        super();
-    }
+
     /**
      * Get data access.
      * @return reference to data

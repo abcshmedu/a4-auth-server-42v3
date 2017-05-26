@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class Token {
 
-    public final static long DEFAULT_TOKEN_LIVE_TIME = 180000;
+    public static long DEFAULT_TOKEN_LIVE_TIME = 180000;
     private final long createTime;
     private final long liveTime;
     private final User owner;
