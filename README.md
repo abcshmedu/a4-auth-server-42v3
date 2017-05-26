@@ -1,4 +1,10 @@
-# Starter Code für 2. Pratkikumsaufgabe Software-Architektur Sommer 2017
+# 4. Pratkikumsaufgabe Software-Architektur Sommer 2017
+
+Elias Porcio (fiskus2)
+
+Raphael Furch (JustABunchOfCode)
+
+Michael Schmid (mschmidae)
 
 Heroku
-https://morning-sierra-53767.herokuapp.com/
+https://stark-inlet-92957.herokuapp.com/
