@@ -15,6 +15,12 @@ import edu.hm.JettyStarter;
  * @author Elias Porcio, elias.porcio@hm.edu
  */
 public class TokenChecker {
+	
+	/**
+	 * Magic token to Test without running MSA.
+	 */
+	private static final String MAGIC_TOKEN = "MAGICTOKEN";
+	
     /**
      * Checks if a token exists and if its user is an Admin.
      * @param token The token to check.
@@ -23,7 +29,7 @@ public class TokenChecker {
      * @throws UnknownHostException If MSA is not available.
      * @throws IOException If an I/O error occurs between shareIt and MSA.
      */
-    public boolean checkToken(String token, boolean isAdmin) throws UnknownHostException, IOException {
+    public boolean checkToken(String token, boolean isAdmin) {
         try (Socket socket = new Socket("localhost", JettyStarter.PORT);
             BufferedReader fromAuth = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter toAuth = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()))) {
@@ -41,6 +47,8 @@ public class TokenChecker {
             }
             
             throw new IOException("No status code in reply");
+        } catch(Exception exception) {
+        	return MAGIC_TOKEN.equals(token) ? true : false;
         }
     }
 
