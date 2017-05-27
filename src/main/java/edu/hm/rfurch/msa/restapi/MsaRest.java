@@ -3,11 +3,19 @@ package edu.hm.rfurch.msa.restapi;
 import edu.hm.rfurch.msa.logic.AuthService;
 import edu.hm.rfurch.msa.model.User;
 
-import javax.ws.rs.*;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
+ * Rest Interface of MSA.
  * @author Raphael Furch, rfurch@hm.edu / Michael Schmid, m.schmid@hm.edu / Elias Porcio
  */
 @Path("/auth")
@@ -26,7 +34,7 @@ public class MsaRest {
     }
 
     /**
-     * Service to get a token for a user
+     * Service to get a token for a user.
      * @param user which is requesting the token
      * @return Response with the result state and a token, if the user is valid.
      */
@@ -47,7 +55,7 @@ public class MsaRest {
     @Path("/token/{token}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response isTokenValid(@PathParam("token") String token, @QueryParam("admin") String admin) {
-    	final boolean isAdmin = admin != null && admin.equals("true") ? true : false;
+    	final boolean isAdmin = admin != null && "true".equals(admin) ? true : false;
     	return new AuthService().proofToken(token, isAdmin).getResponse();
     }
 
