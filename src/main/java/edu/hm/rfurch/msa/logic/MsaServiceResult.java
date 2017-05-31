@@ -35,6 +35,7 @@ public enum MsaServiceResult {
     MsaServiceResult(int code, String status) {
         this.code = code;
         this.status = status;
+        this.token = null;
     }
 
     /**
@@ -92,6 +93,7 @@ public enum MsaServiceResult {
                 .put("help", "http://lmgtfy.com/?q=http+statuscode+" + this.getCode());
         if(this.getToken() != null)
             json.put("token",this.getToken());
+        this.token = null;
         return javax.ws.rs.core.Response.status(this.getCode())
                 .entity(json.toString())
                 .build();
