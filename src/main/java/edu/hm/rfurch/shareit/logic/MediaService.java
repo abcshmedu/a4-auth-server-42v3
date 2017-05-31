@@ -1,6 +1,7 @@
 package edu.hm.rfurch.shareit.logic;
 
 import edu.hm.rfurch.shareit.data.ResourceManager;
+import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.IBook;
 import edu.hm.rfurch.shareit.model.IDisc;
 import edu.hm.rfurch.shareit.model.IMedium;
@@ -21,7 +22,7 @@ public class MediaService implements IMediaService {
         if (book == null) {
             throw new NullPointerException();
         }
-        return Optional.of(ResourceManager.dataAccess().add(book).get() ? MediaServiceResult.OK : MediaServiceResult.BadRequest);
+        return Optional.of(ResourceManager.dataAccess().add(new Book(book.getTitle(), book.getAuthor(), book.getIsbn())).get() ? MediaServiceResult.OK : MediaServiceResult.BadRequest);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class MediaService implements IMediaService {
         }
         Optional<IMedium> oFullBook = ResourceManager.dataAccess().getBook(book.getIsbn());
         if (oFullBook.isPresent()) {
-            Optional<IBook> updatedBook = ((IBook)oFullBook.get()).update(book);
+            Optional<IBook> updatedBook = ((IBook)oFullBook.get()).update(new Book(book.getTitle(), book.getAuthor(), book.getIsbn()));
             if (updatedBook.isPresent()) {
                 ResourceManager.dataAccess().remove(oFullBook.get());
                 ResourceManager.dataAccess().add(updatedBook.get());
@@ -63,7 +64,7 @@ public class MediaService implements IMediaService {
         if (book == null) {
             throw new NullPointerException();
         }
-        return Optional.of(ResourceManager.dataAccess().remove(book).orElse(false) ? MediaServiceResult.NoContent : MediaServiceResult.BadRequest);
+        return Optional.of(ResourceManager.dataAccess().remove(new Book(book.getTitle(), book.getAuthor(), book.getIsbn())).orElse(false) ? MediaServiceResult.NoContent : MediaServiceResult.BadRequest);
     }
 
     @Override
