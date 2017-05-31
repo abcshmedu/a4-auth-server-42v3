@@ -41,6 +41,7 @@ public enum MediaServiceResult {
     MediaServiceResult(int code, String status) {
         this.code = code;
         this.status = status;
+        this.responseData = null;
     }
 
     /**
