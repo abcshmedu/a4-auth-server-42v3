@@ -15,12 +15,14 @@
 		  <param-name>jersey.config.server.provider.packages</param-name>  
 	     <param-value>edu.hm</param-value>
 	     </init-param>
-		<load-on-startup>1</load-on-startup>
+
+		 <load-on-startup>1</load-on-startup>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>Jersey Web Application</servlet-name>
 		<url-pattern>/convert/*</url-pattern>
+
 	</servlet-mapping>
 
      <servlet>
@@ -32,8 +34,8 @@
 	     </init-param>
 		<init-param>
 		  <param-name>jersey.config.server.provider.classnames</param-name>
-		  <param-value>org.glassfish.jersey.jackson.JacksonFeature</param-value>
-		</init-param>
+		  <param-value>org.glassfish.jersey.jackson.JacksonFeature;edu.hm.rfurch.shareit.restapi.ConverterExceptionParser</param-value>
+		 </init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
