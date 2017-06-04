@@ -62,4 +62,10 @@
 		<servlet-name>MSA</servlet-name>
 		<url-pattern>/msa/*</url-pattern>
 	</servlet-mapping>
+	
+	<listener>
+		<listener-class>
+			edu.hm.ShareitServletContextListener
+		</listener-class>
+	</listener>
 </web-app>
