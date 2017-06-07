@@ -1,9 +1,15 @@
 package edu.hm.rfurch.shareit.logic;
 
+import edu.hm.rfurch.shareit.data.MediaResourceModule;
+import edu.hm.rfurch.shareit.data.ResourceManager;
 import edu.hm.rfurch.shareit.model.*;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +20,13 @@ import java.util.Optional;
  * Created by Admin on 23.04.2017.
  */
 public class MediaServiceTest {
+	
+	@BeforeClass
+	public static void setup() {
+		final ResourceManager manager = new ResourceManager();
+		final Injector injector = Guice.createInjector(new MediaResourceModule());
+		injector.injectMembers(manager);
+	}
 
     // <editor-fold defaultstate="collapsed" desc="Get">
     @Test

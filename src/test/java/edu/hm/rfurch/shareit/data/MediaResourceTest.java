@@ -1,8 +1,13 @@
 package edu.hm.rfurch.shareit.data;
 
 import edu.hm.rfurch.shareit.model.*;
+
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +18,12 @@ import java.util.Optional;
  */
 public class MediaResourceTest {
 
+	@BeforeClass
+	public static void setup() {
+		final ResourceManager manager = new ResourceManager();
+		final Injector injector = Guice.createInjector(new MediaResourceModule());
+		injector.injectMembers(manager);
+	}
 
     @Test
     public void testDataAccessOverOnePoint(){
