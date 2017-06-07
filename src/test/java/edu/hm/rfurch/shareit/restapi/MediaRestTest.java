@@ -78,10 +78,6 @@ public class MediaRestTest {
 		String expected1 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"test\",\"isbn\":\"9783127323207\",\"title\":\"test\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
 		String expected2 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"author\":\"TEST\",\"isbn\":\"9783127323207\",\"title\":\"TEST\"}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
 		ResourceManager.dataAccess().remove(modified);
-		System.out.println(actual1);
-		System.out.println(expected1);
-		System.out.println(actual2);
-		System.out.println(expected2);
 		assertEquals(expected1, actual1);
 		assertEquals(expected2, actual2);
 	}

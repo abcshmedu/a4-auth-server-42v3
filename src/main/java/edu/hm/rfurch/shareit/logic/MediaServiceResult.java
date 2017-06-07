@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 
@@ -41,7 +42,7 @@ public enum MediaServiceResult {
     MediaServiceResult(int code, String status) {
         this.code = code;
         this.status = status;
-        this.responseData = null;
+        this.responseData = new ArrayList<IMedium>();
     }
 
     /**

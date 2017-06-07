@@ -15,6 +15,7 @@ public class ParseExceptionCatcher implements ExceptionMapper<PropertyBindingExc
 
 
     public Response toResponse(PropertyBindingException exception){
+        System.out.println(exception);
         return MediaServiceResult.IamATeapot.getResponse();
     }
 
