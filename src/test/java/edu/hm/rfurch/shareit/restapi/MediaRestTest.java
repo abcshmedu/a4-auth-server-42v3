@@ -8,11 +8,16 @@ import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONObject;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 
 import edu.hm.rfurch.msa.model.User;
 import edu.hm.rfurch.msa.restapi.MsaRest;
 import edu.hm.rfurch.msa.restapi.UserTransferObject;
+import edu.hm.rfurch.shareit.data.MediaResourceModule;
 import edu.hm.rfurch.shareit.data.ResourceManager;
 import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.Disc;
@@ -21,6 +26,13 @@ import edu.hm.rfurch.shareit.model.IBook;
 public class MediaRestTest {
 
 	private static final String MAGIC_TOKEN = "MAGICTOKEN";
+	
+	@BeforeClass
+	public static void setup() {
+		final ResourceManager manager = new ResourceManager();
+		final Injector injector = Guice.createInjector(new MediaResourceModule());
+		injector.injectMembers(manager);
+	}
 	
 	@Test
 	public void getBooksTest() {
