@@ -2,11 +2,14 @@ package edu.hm.rfurch.shareit.model;
 
 import java.util.Optional;
 
+import javax.persistence.Entity;
+
 /**
  * 
  * @author Raphael Furch, rfurch@hm.edu / Michael Schmid, m.schmid@hm.edu
  *
  */
+@Entity
 public class Disc extends BaseMedium implements IDisc {
     /**
      * Ctor to create a disc object with title, barcode, director and fsk.
@@ -27,10 +30,10 @@ public class Disc extends BaseMedium implements IDisc {
 
 
     /**
-     * Ctor used by jackson.
+     * Ctor used by jackson and hibernate.
      */
     @SuppressWarnings("unused") // Constructor for Reflection
-    private Disc() {
+    Disc() {
         this("", "", "", 0);
     }
 

@@ -2,11 +2,14 @@ package edu.hm.rfurch.shareit.model;
 
 import java.util.Optional;
 
+import javax.persistence.Entity;
+
 /**
  * 
  * @author Raphael Furch, rfurch@hm.edu / Michael Schmid, m.schmid@hm.edu
  *
  */
+@Entity
 public class Book extends BaseMedium implements IBook {
     /**
      * Ctor to create a book object with title, author and isbn.
@@ -28,13 +31,12 @@ public class Book extends BaseMedium implements IBook {
     }
 
     /**
-     * Ctor used by jackson.
+     * Ctor used by jackson and hibernate.
      */
     @SuppressWarnings("unused") // Constructor for Reflection
-    private Book() {
+    Book() {
         this("", "", "");
     }
-
 
     private final String author;
     @Override
