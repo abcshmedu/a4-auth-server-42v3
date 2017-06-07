@@ -20,7 +20,6 @@ public class ShareitServletContextListener extends GuiceServletContextListener {
     private static final Injector injector = Guice.createInjector(new ServletModule() {
         @Override
         protected void configureServlets() {
-            bind(IMediaService.class).to(MediaService.class);
             bind(IData.class).to(MediaResource.class);
         }
     });
