@@ -94,7 +94,7 @@ public enum MediaServiceResult {
      * @return response of the MediaServiceResult
      */
     public javax.ws.rs.core.Response getResponse() {
-        return javax.ws.rs.core.Response.status(this.getCode())
+        final javax.ws.rs.core.Response re =  javax.ws.rs.core.Response.status(this.getCode())
                 .entity(new JSONObject()
                 .put("status", this.getCode())
                 .put("message", this.getStatus())
@@ -103,6 +103,8 @@ public enum MediaServiceResult {
                 .put("help", "http://lmgtfy.com/?q=http+statuscode+" + this.getCode())
                 .toString())
                 .build();
+        this.responseData = null;
+        return re;
     }
 
 

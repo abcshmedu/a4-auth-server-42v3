@@ -68,7 +68,6 @@ public class MediaServiceResultTest {
     public void serilizeContentSingleDiscTest(){
         MediaServiceResult re = MediaServiceResult.OK;
         re.setResponseData(new Disc("t","5055011702189","d",1));
-        System.out.println(new JSONObject(re.getResponse()).get("entity").toString());
         Assert.assertEquals("{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"director\":\"d\",\"title\":\"t\",\"barcode\":\"5055011702189\",\"fsk\":1}],\"message\":\"OK\",\"data-length\":1,\"status\":200}", new JSONObject(re.getResponse()).get("entity").toString());
     }
 
