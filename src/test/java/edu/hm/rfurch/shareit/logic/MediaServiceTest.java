@@ -23,9 +23,8 @@ public class MediaServiceTest {
 	
 	@BeforeClass
 	public static void setup() {
-		final ResourceManager manager = new ResourceManager();
 		final Injector injector = Guice.createInjector(new MediaResourceModule());
-		injector.injectMembers(manager);
+		injector.injectMembers(ResourceManager.getResourceManager());
 	}
 
     // <editor-fold defaultstate="collapsed" desc="Get">

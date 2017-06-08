@@ -22,3 +22,7 @@ hs_err_pid*
 
 .checkstyle
 .eclipse-pmd
+/xxx.html
+/shareit-db.script
+/shareit-db.properties
+/shareit-db.log

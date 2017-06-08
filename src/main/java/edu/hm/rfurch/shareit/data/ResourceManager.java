@@ -14,10 +14,12 @@ public final class ResourceManager {
     private static IData DATA = null;
     //private static IData DATA = new MediaResource();
     
+    private final static ResourceManager RESOURCEMANAGER = new ResourceManager();
+    
     /**
      * Look constructor.
      */
-    public ResourceManager() {
+    private ResourceManager() {
         super();
     }
     /**
@@ -26,6 +28,10 @@ public final class ResourceManager {
      */
     public static IData dataAccess() {
         return DATA;
+    }
+    
+    public static ResourceManager getResourceManager() {
+    	return RESOURCEMANAGER;
     }
     
     @Inject
