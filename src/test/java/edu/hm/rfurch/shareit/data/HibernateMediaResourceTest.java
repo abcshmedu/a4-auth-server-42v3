@@ -12,9 +12,8 @@ public class HibernateMediaResourceTest {
 
 	@BeforeClass
 	public static void setup() {
-		final ResourceManager manager = new ResourceManager();
 		final Injector injector = Guice.createInjector(new HibernateMediaResourceModule());
-		injector.injectMembers(manager);
+		injector.injectMembers(ResourceManager.getResourceManager());
 	}
 	
 	@Test
