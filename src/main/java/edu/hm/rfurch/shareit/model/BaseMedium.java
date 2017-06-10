@@ -8,6 +8,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * 
  * @author Raphael Furch, rfurch@hm.edu / Michael Schmid, m.schmid@hm.edu
@@ -21,7 +23,8 @@ public abstract class BaseMedium implements IMedium {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-    private final String title;
+
+	private final String title;
     
     /**
      * Ctor to create a BaseMedium.
