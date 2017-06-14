@@ -87,7 +87,7 @@ public class HibernateMediaResourceTest {
     @Test
     public void addABookAndDeleteIt(){
         IBook expect = new Book("Title2", "Author2", "978-3-8369-4917-0");
-        data.add(expect);
+        assertTrue(data.add(expect).get());
         Optional<IMedium> actual = data.getBook("978-3-8369-4917-0");
 
         Assert.assertEquals(expect,actual.get());
@@ -95,7 +95,7 @@ public class HibernateMediaResourceTest {
                 .map(IBook.class::cast).filter(f -> f.getIsbn().equals("9783836949170")).findAny().get());
         Assert.assertEquals(expect,data.getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
 
-        data.remove(expect);
+        assertTrue(data.remove(expect).get());
 
         Optional<IMedium> actual2 =  data.getBook("978-3-8369-4917-0");
         Assert.assertFalse(actual2.isPresent());
@@ -125,6 +125,16 @@ public class HibernateMediaResourceTest {
         Assert.assertFalse(data.getDiscs().get().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().isPresent());
     }
     
+    @Test
+    public void addBookTwice(){
+        IBook expect = new Book("Title2", "Author2", "978-3-8369-4917-0");
+        Assert.assertEquals(true, data.add(expect).get());
+        Optional<IMedium> actual = data.getBook("978-3-8369-4917-0");
+
+        Assert.assertEquals(expect,actual.get());
+        Assert.assertEquals(false, data.add(expect).get());
+        data.remove(expect);
+    }
 
     @Test
     public void checkIfClearWorks() {

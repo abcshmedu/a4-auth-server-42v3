@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 
+import edu.hm.rfurch.shareit.data.HibernateMediaResource;
 import edu.hm.rfurch.shareit.data.IData;
 import edu.hm.rfurch.shareit.data.MediaResource;
 import edu.hm.rfurch.shareit.logic.IMediaService;
@@ -21,7 +22,7 @@ public class ShareItServletContextListener extends GuiceServletContextListener {
         @Override
         protected void configureServlets() {
             bind(IMediaService.class).to(MediaService.class);
-            bind(IData.class).to(MediaResource.class);
+            bind(IData.class).to(HibernateMediaResource.class);
 
 
         }

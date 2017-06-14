@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.google.inject.Guice;
@@ -19,29 +19,30 @@ import edu.hm.rfurch.shareit.model.IMedium;
 
 public class ResourceMockTest {
 
-	@BeforeClass
-	public static void setup() {
-		final Injector injector = Guice.createInjector(new MockitoModule());
-		injector.injectMembers(ResourceManager.getResourceManager());
-		when(ResourceManager.dataAccess().getBooks()).thenCallRealMethod();
-		when(ResourceManager.dataAccess().getDiscs()).thenCallRealMethod();
-		when(ResourceManager.dataAccess().getBook(anyString())).thenCallRealMethod();
-		when(ResourceManager.dataAccess().getDisc(anyString())).thenCallRealMethod();
+	private IData data;
+	@Before
+	public void setup() {
+		Injector injector = Guice.createInjector(new MockitoModule());
+		this.data = injector.getInstance(IData.class);
+		when(data.getBooks()).thenCallRealMethod();
+		when(data.getDiscs()).thenCallRealMethod();
+		when(data.getBook(anyString())).thenCallRealMethod();
+		when(data.getDisc(anyString())).thenCallRealMethod();
 	}
 	
 	@Test
 	public void getAllMediaEmptyListTest() {
 		List<IMedium> media = new ArrayList<>();
-		when(ResourceManager.dataAccess().getMediums()).thenReturn(media);
-		assertEquals(media, ResourceManager.dataAccess().getMediums());
+		when(data.getMediums()).thenReturn(media);
+		assertEquals(media, data.getMediums());
 	}
 	
 	@Test
 	public void getAllMediaTest() {
 		List<IMedium> media = new ArrayList<>();
 		media.add(new Book("Die Eule mit der Beule", "Susanne Weber", "978-3789167065"));
-		when(ResourceManager.dataAccess().getMediums()).thenReturn(media);
-		assertEquals(media, ResourceManager.dataAccess().getMediums());
+		when(data.getMediums()).thenReturn(media);
+		assertEquals(media, data.getMediums());
 	}
 	
 	@Test
@@ -50,9 +51,9 @@ public class ResourceMockTest {
 		List<IMedium> media = new ArrayList<>();
 		media.add(dieEuleMitDerBeule);
 				
-		when(ResourceManager.dataAccess().getMediums()).thenReturn(media);
+		when(data.getMediums()).thenReturn(media);
 		
-		Optional<IMedium> optionalBookFromData = ResourceManager.dataAccess().getBook("978-3789167065");
+		Optional<IMedium> optionalBookFromData = data.getBook("978-3789167065");
 		assertTrue(optionalBookFromData.isPresent());
 		IBook bookFromData = (IBook)optionalBookFromData.get();
 		
@@ -65,9 +66,9 @@ public class ResourceMockTest {
 		List<IMedium> media = new ArrayList<>();
 		media.add(dieEuleMitDerBeule);
 				
-		when(ResourceManager.dataAccess().getMediums()).thenReturn(media);
+		when(data.getMediums()).thenReturn(media);
 		
-		Optional<IMedium> optionalBookFromData = ResourceManager.dataAccess().getBook("9783789167065");
+		Optional<IMedium> optionalBookFromData = data.getBook("9783789167065");
 		assertTrue(optionalBookFromData.isPresent());
 		IBook bookFromData = (IBook)optionalBookFromData.get();
 		
