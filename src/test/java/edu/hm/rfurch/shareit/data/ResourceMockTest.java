@@ -1,4 +1,4 @@
-package edu.hm.rfurch.shareit.data;
+/**package edu.hm.rfurch.shareit.data;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -75,3 +75,4 @@ public class ResourceMockTest {
 	}
 
 }
+**/

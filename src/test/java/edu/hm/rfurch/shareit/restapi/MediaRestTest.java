@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import javax.ws.rs.core.Response;
 
 import edu.hm.rfurch.shareit.logic.IMediaService;
+import edu.hm.rfurch.shareit.model.Disc;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,9 +41,11 @@ public class MediaRestTest {
 		String actual = response.getEntity().toString();
 		assertEquals(expected, actual);
 	}
+
+
 	
 	@Test
-	public void getBookBadResonseIsbnTest() {
+	public void getBookBadReasonseIsbnTest() {
 		Response response = new MediaRest(service).getBook("", MAGIC_TOKEN);
 		String expected = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+400\",\"data\":\"error\",\"message\":\"Bad Request\",\"data-length\":-1,\"status\":400}";
 		String actual = response.getEntity().toString();
@@ -50,7 +53,7 @@ public class MediaRestTest {
 	}
 	
 	@Test
-	public void getBookBadResonseNullTest() {
+	public void getBookBadReasonseNullTest() {
 		Response response = new MediaRest(service).getBook(null, MAGIC_TOKEN);
 		String expected = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+400\",\"data\":\"error\",\"message\":\"Bad Request\",\"data-length\":-1,\"status\":400}";
 		String actual = response.getEntity().toString();
@@ -81,6 +84,27 @@ public class MediaRestTest {
 		assertEquals(expected1, actual1);
 		assertEquals(expected2, actual2);
 	}
+
+	@Test
+	public void addDiscTest() {
+		Disc testObject = new Disc("Disc1", "5055011702189", "Dirctor1", 1);
+		Response response = new MediaRest(service).addDisc(testObject, MAGIC_TOKEN);
+		String expected2 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"director\":\"Dirctor1\",\"title\":\"Disc1\",\"barcode\":\"5055011702189\",\"fsk\":1}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
+		String actual2 = new MediaRest(service).getDisc("5055011702189", MAGIC_TOKEN).getEntity().toString();
+		assertEquals(expected2, actual2);
+	}
+
+	@Test
+	public void updateDiscTest() {
+		Disc orginal = new Disc("Disc1", "5055011702189", "Dirctor1", 1);
+		Disc modified = new Disc("Disc1", "5055011702189", "Dirctor2", 2);
+		new MediaRest(service).addDisc(orginal, MAGIC_TOKEN);
+		String actual1 = new MediaRest(service).getDisc("5055011702189", MAGIC_TOKEN).getEntity().toString();
+		new MediaRest(service).updateDisc(modified, "5055011702189", MAGIC_TOKEN);
+		String actual2 = new MediaRest(service).getDisc("5055011702189", MAGIC_TOKEN).getEntity().toString();
+		String expected1 = "{\"help\":\"http://lmgtfy.com/?q=http+statuscode+200\",\"data\":[{\"director\":\"Dirctor1\",\"title\":\"Disc1\",\"barcode\":\"5055011702189\",\"fsk\":1}],\"message\":\"OK\",\"data-length\":1,\"status\":200}";
+		assertEquals(expected1, actual1);
+	}
 	
 	@Test
 	public void getDiscsTest() {
@@ -98,4 +122,28 @@ public class MediaRestTest {
 		assertEquals(expected, actual);
 	}
 
+
+	// wrong tokens
+	@Test
+	public void getBookTestInvalidToken() {
+		Response response = new MediaRest(service).getBook("978-3-86680-192-9", "lulu");
+		assertTrue(response.getEntity().toString().contains("418"));
+	}
+
+	@Test
+	public void getBooksTestInvalidToken() {
+		Response response = new MediaRest(service).getBooks("lulu");
+		assertTrue(response.getEntity().toString().contains("418"));
+	}
+
+	@Test
+	public void getDiscsTestInvalidToken() {
+		Response response = new MediaRest(service).getDiscs("lulu");
+		assertTrue(response.getEntity().toString().contains("418"));
+	}
+	@Test
+	public void getDiscTestInvalidToken() {
+		Response response = new MediaRest(service).getBook("4059251015567", "lulu");
+		assertTrue(response.getEntity().toString().contains("418"));
+	}
 }

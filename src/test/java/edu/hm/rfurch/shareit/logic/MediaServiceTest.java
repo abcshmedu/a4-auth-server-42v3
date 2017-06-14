@@ -38,9 +38,6 @@ public class MediaServiceTest {
         expects.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
 
         Collection<IMedium> actuals = new MediaService(data).getMediums().get().getResponseData();
-        System.out.println("-----------");
-        System.out.println(new JSONObject(new MediaService(data).getMediums().get().getResponse()).get("entity").toString());
-        System.out.println("-----------");
         Assert.assertArrayEquals(expects.toArray(), actuals.toArray());
     }
 

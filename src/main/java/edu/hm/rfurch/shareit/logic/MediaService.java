@@ -34,7 +34,9 @@ public class MediaService implements IMediaService {
         if (book == null) {
             throw new NullPointerException();
         }
-        return Optional.of(this.getData().add(new Book(book.getTitle(), book.getAuthor(), book.getIsbn())).get() ? MediaServiceResult.OK : MediaServiceResult.BadRequest);
+        return Optional.of(this.getData().add(new Book(book.getTitle(), book.getAuthor(), book.getIsbn())).orElse(false) ?
+                MediaServiceResult.OK :
+                MediaServiceResult.BadRequest);
     }
 
     @Override
@@ -100,7 +102,9 @@ public class MediaService implements IMediaService {
             throw new NullPointerException();
         }
         Optional<IMedium> oMediaServiceResult = this.getData().getDisc(barcode);
-        return oMediaServiceResult.isPresent() ? Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())) : Optional.empty();
+        return oMediaServiceResult.isPresent() ?
+                Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())) :
+                Optional.empty();
     }
 
     @Override
@@ -128,7 +132,7 @@ public class MediaService implements IMediaService {
         return  Optional.of(this.getData().remove(disc).orElse(false) ? MediaServiceResult.NoContent : MediaServiceResult.BadRequest);
     }
 
-    @GET
+
     @Override
     public Optional<MediaServiceResult> getMediums() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
