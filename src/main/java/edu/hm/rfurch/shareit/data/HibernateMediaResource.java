@@ -1,6 +1,8 @@
 package edu.hm.rfurch.shareit.data;
 
 import edu.hm.rfurch.shareit.model.*;
+
+import java.math.BigInteger;
 import java.util.*;
 
 import javax.persistence.Query;
@@ -41,13 +43,16 @@ public class HibernateMediaResource implements IData {
   	
         Optional<Boolean> result;
         if (medium != null && medium.valid() && !exists(medium)) {
+        	System.out.println("not exists");
             session.persist(medium);
+            
             result = Optional.of(true);
         } else {
             result = Optional.of(false);
+            System.out.println("exists");
         }
-        
         tx.commit();
+        
         return result;
 
     }
@@ -77,6 +82,7 @@ public class HibernateMediaResource implements IData {
     }
     
     private boolean exists(IMedium medium) {
+    	System.out.println("exists()");
     	final Session session = sessionFactory.getCurrentSession();
     	Query query = null;
     	boolean result = false; 
@@ -88,8 +94,9 @@ public class HibernateMediaResource implements IData {
     		query.setParameter("barcode", ((IDisc)medium).getBarcode());
     	}
     	
+    	
     	if(query != null)
-    		result = query.getFirstResult() == 1;
+    		result = ((BigInteger)query.getSingleResult()).longValue() == 1;
     	
     	return result;
     }
