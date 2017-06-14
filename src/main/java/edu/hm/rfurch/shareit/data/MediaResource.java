@@ -1,6 +1,8 @@
 package edu.hm.rfurch.shareit.data;
 
 import edu.hm.rfurch.shareit.model.*;
+
+import javax.inject.Inject;
 import java.util.*;
 
 /**
@@ -10,19 +12,14 @@ import java.util.*;
  */
 public class MediaResource implements IData {
 
-    private static List<IMedium> mediaDatabase = mediaDatabase = new ArrayList<IMedium>()
-    {
-        {
-            mediaDatabase.add(new Book("Title1", "Author1", "9783866801929"));
-            mediaDatabase.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
-        }
-    };
+    private  List<IMedium> mediaDatabase = mediaDatabase = new ArrayList<IMedium>();
 
     /**
      * Ctor of MediaResource.
      */
-    protected MediaResource() {
-
+    public MediaResource() {
+        mediaDatabase.add(new Book("Title1", "Author1", "9783866801929"));
+        mediaDatabase.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
     }
 
     @Override
