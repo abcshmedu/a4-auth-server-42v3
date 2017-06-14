@@ -25,6 +25,10 @@ public class HibernateMediaResourceTest {
 	public static void setup() {
 		final Injector injector = Guice.createInjector(new HibernateMediaResourceModule());
 		injector.injectMembers(ResourceManager.getResourceManager());
+		
+		// Insert TestMedia
+		ResourceManager.dataAccess().add(new Book("Title1", "Author1", "9783866801929"));
+		ResourceManager.dataAccess().add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
 	}
 	
     @Test

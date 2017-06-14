@@ -9,7 +9,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.transform.Transformers;
 
 /**
  * MediaResource class for persistent data.
@@ -24,11 +23,6 @@ public class HibernateMediaResource implements IData {
      * Ctor of HibernateMediaResource.
      */
     protected HibernateMediaResource() {
-    	final Session session = sessionFactory.getCurrentSession();
-    	Transaction tx = session.beginTransaction();
-    	session.persist(new Book("Title1", "Author1", "9783866801929"));
-    	session.persist(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
-        tx.commit();
     }
 
     @Override
