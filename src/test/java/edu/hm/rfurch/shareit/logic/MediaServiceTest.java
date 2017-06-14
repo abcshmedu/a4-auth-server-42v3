@@ -1,7 +1,6 @@
 package edu.hm.rfurch.shareit.logic;
 
 import edu.hm.rfurch.shareit.data.MediaResourceModule;
-import edu.hm.rfurch.shareit.data.ResourceManager;
 import edu.hm.rfurch.shareit.model.*;
 import org.json.JSONObject;
 import org.junit.Assert;

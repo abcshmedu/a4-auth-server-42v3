@@ -21,8 +21,6 @@ public class JacksonMappingTest {
 	@Test
 	public void testToJson() throws JsonProcessingException {
 		String s = mapper.writeValueAsString(book);
-		System.out.println(json1);
-		System.out.println(s);
 		assertEquals(json1,s);
 	}
 	

@@ -1,12 +1,13 @@
 package edu.hm.rfurch.shareit.logic;
 
-import edu.hm.rfurch.shareit.data.ResourceManager;
+import edu.hm.rfurch.shareit.data.IData;
 import edu.hm.rfurch.shareit.model.Book;
 import edu.hm.rfurch.shareit.model.IBook;
 import edu.hm.rfurch.shareit.model.IDisc;
 import edu.hm.rfurch.shareit.model.IMedium;
 
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -17,18 +18,29 @@ import java.util.Optional;
  *
  */
 public class MediaService implements IMediaService {
+
+
+    private final IData data;
+    private IData getData(){
+        return data;
+    }
+    @Inject
+    public MediaService(IData data){
+        this.data = data;
+    }
+
     @Override
     public Optional<MediaServiceResult> addBook(IBook book) {
         if (book == null) {
             throw new NullPointerException();
         }
-        return Optional.of(ResourceManager.dataAccess().add(new Book(book.getTitle(), book.getAuthor(), book.getIsbn())).get() ? MediaServiceResult.OK : MediaServiceResult.BadRequest);
+        return Optional.of(this.getData().add(new Book(book.getTitle(), book.getAuthor(), book.getIsbn())).get() ? MediaServiceResult.OK : MediaServiceResult.BadRequest);
     }
 
     @Override
     public Optional<MediaServiceResult> getBooks() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
-                ResourceManager.dataAccess().getBooks().orElse(new ArrayList<>())));
+                this.getData().getBooks().orElse(new ArrayList<>())));
     }
 
 
@@ -37,7 +49,7 @@ public class MediaService implements IMediaService {
         if (isbn == null) {
             throw new NullPointerException();
         }
-        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getBook(isbn.replace("-",""));
+        Optional<IMedium> oMediaServiceResult = this.getData().getBook(isbn.replace("-",""));
         return oMediaServiceResult.isPresent() ? Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())) : Optional.empty();
 
     }
@@ -47,12 +59,12 @@ public class MediaService implements IMediaService {
         if (book == null) {
             throw new NullPointerException();
         }
-        Optional<IMedium> oFullBook = ResourceManager.dataAccess().getBook(book.getIsbn());
+        Optional<IMedium> oFullBook = this.getData().getBook(book.getIsbn());
         if (oFullBook.isPresent()) {
             Optional<IBook> updatedBook = ((IBook)oFullBook.get()).update(new Book(book.getTitle(), book.getAuthor(), book.getIsbn()));
             if (updatedBook.isPresent()) {
-                ResourceManager.dataAccess().remove(oFullBook.get());
-                ResourceManager.dataAccess().add(updatedBook.get());
+                this.getData().remove(oFullBook.get());
+                this.getData().add(updatedBook.get());
                 return Optional.of(MediaServiceResult.OK);
             }
         }
@@ -64,7 +76,7 @@ public class MediaService implements IMediaService {
         if (book == null) {
             throw new NullPointerException();
         }
-        return Optional.of(ResourceManager.dataAccess().remove(new Book(book.getTitle(), book.getAuthor(), book.getIsbn())).orElse(false) ? MediaServiceResult.NoContent : MediaServiceResult.BadRequest);
+        return Optional.of(this.getData().remove(new Book(book.getTitle(), book.getAuthor(), book.getIsbn())).orElse(false) ? MediaServiceResult.NoContent : MediaServiceResult.BadRequest);
     }
 
     @Override
@@ -72,13 +84,13 @@ public class MediaService implements IMediaService {
         if (disc == null) {
             throw new NullPointerException();
         }
-        return Optional.of(ResourceManager.dataAccess().add(disc).get() ? MediaServiceResult.OK : MediaServiceResult.BadRequest);
+        return Optional.of(this.getData().add(disc).get() ? MediaServiceResult.OK : MediaServiceResult.BadRequest);
     }
 
     @Override
     public Optional<MediaServiceResult> getDiscs() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
-                ResourceManager.dataAccess().getDiscs().orElse(new ArrayList<>())
+                this.getData().getDiscs().orElse(new ArrayList<>())
         ));
     }
 
@@ -87,7 +99,7 @@ public class MediaService implements IMediaService {
         if (barcode == null) {
             throw new NullPointerException();
         }
-        Optional<IMedium> oMediaServiceResult = ResourceManager.dataAccess().getDisc(barcode);
+        Optional<IMedium> oMediaServiceResult = this.getData().getDisc(barcode);
         return oMediaServiceResult.isPresent() ? Optional.of(MediaServiceResult.OK.setResponseData(oMediaServiceResult.get())) : Optional.empty();
     }
 
@@ -96,12 +108,12 @@ public class MediaService implements IMediaService {
         if (disc == null) {
             throw new NullPointerException();
         }
-        Optional<IMedium> oFullDisc = ResourceManager.dataAccess().getDisc(disc.getBarcode());
+        Optional<IMedium> oFullDisc = this.getData().getDisc(disc.getBarcode());
         if (oFullDisc.isPresent()) {
             Optional<IDisc> updatedDisc = ((IDisc)oFullDisc.get()).update(disc);
             if (updatedDisc.isPresent()) {
-                ResourceManager.dataAccess().remove(oFullDisc.get());
-                ResourceManager.dataAccess().add(updatedDisc.get());
+                this.getData().remove(oFullDisc.get());
+                this.getData().add(updatedDisc.get());
                 return Optional.of(MediaServiceResult.OK);
             }
         }
@@ -113,14 +125,14 @@ public class MediaService implements IMediaService {
        if (disc == null) {
            throw new NullPointerException();
        }
-        return  Optional.of(ResourceManager.dataAccess().remove(disc).orElse(false) ? MediaServiceResult.NoContent : MediaServiceResult.BadRequest);
+        return  Optional.of(this.getData().remove(disc).orElse(false) ? MediaServiceResult.NoContent : MediaServiceResult.BadRequest);
     }
 
     @GET
     @Override
     public Optional<MediaServiceResult> getMediums() {
         return Optional.of(MediaServiceResult.OK.setResponseData(
-                ResourceManager.dataAccess().getMediums())
+                this.getData().getMediums())
         );
     }
 }

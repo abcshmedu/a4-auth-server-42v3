@@ -11,7 +11,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import edu.hm.rfurch.shareit.data.MediaResourceModule;
-import edu.hm.rfurch.shareit.data.ResourceManager;
 import edu.hm.rfurch.shareit.model.Book;
 
 public class MediaRestTest {

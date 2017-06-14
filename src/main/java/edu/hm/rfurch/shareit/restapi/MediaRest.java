@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import edu.hm.rfurch.shareit.logic.MediaService;
+import edu.hm.rfurch.shareit.logic.IMediaService;
 import edu.hm.rfurch.shareit.logic.MediaServiceResult;
 import edu.hm.rfurch.shareit.logic.TokenChecker;
 import edu.hm.rfurch.shareit.model.Book;
@@ -28,6 +29,16 @@ import edu.hm.rfurch.shareit.model.IMedium;
  */
 @Path("/media")
 public class MediaRest {
+
+    private final IMediaService service;
+    private IMediaService getService(){
+        return service;
+    }
+    @Inject
+    public MediaRest(IMediaService service){
+        this.service = service;
+    }
+
     /**
      * JSON interface to get a list of all books.
      * @param token Token of the user calling the method.
@@ -36,6 +47,7 @@ public class MediaRest {
     @GET
     @Path("/books/{token}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Inject
     public Response getBooks(@PathParam("token") String token) {
         try {
             if (!new TokenChecker().checkToken(token, false)) {
@@ -45,7 +57,7 @@ public class MediaRest {
             return MediaServiceResult.IamATeapot.getResponse();
         }
         
-        List<IMedium> oBooks = new MediaService().getBooks().get().getResponseData().stream().filter(book -> book instanceof Book).map(book -> (Book)book).collect(Collectors.toList());
+        List<IMedium> oBooks = this.getService().getBooks().get().getResponseData().stream().filter(book -> book instanceof Book).map(book -> (Book)book).collect(Collectors.toList());
         return MediaServiceResult.OK.setResponseData(oBooks).getResponse();
     }
 
@@ -69,7 +81,7 @@ public class MediaRest {
         
         Response result = MediaServiceResult.BadRequest.getResponse();
             if (isbn != null && token != null) {            
-                Optional<MediaServiceResult> oBook = new MediaService().getBook(isbn);
+                Optional<MediaServiceResult> oBook = this.getService().getBook(isbn);
                 result = oBook.isPresent() ? oBook.get().getResponse() : MediaServiceResult.BadRequest.getResponse();
             }
        return result;
@@ -97,7 +109,7 @@ public class MediaRest {
         
         Response result;
         try {
-            result = new MediaService().addBook(book).get().getResponse();
+            result = this.getService().addBook(book).get().getResponse();
         } catch (NullPointerException exception) {
             result = MediaServiceResult.BadRequest.getResponse();
         }
@@ -126,7 +138,7 @@ public class MediaRest {
         
         Response result;
         if (book != null && book.getIsbn().equals(isbn.replace("-", ""))) {
-            result = new MediaService().updateBook(book).get().getResponse();
+            result = this.getService().updateBook(book).get().getResponse();
         } else {
             result = MediaServiceResult.BadRequest.getResponse();
         }
@@ -150,7 +162,7 @@ public class MediaRest {
             return MediaServiceResult.IamATeapot.getResponse();
         }
         
-        List<IMedium> oDiscs = new MediaService().getDiscs().get().getResponseData().stream().filter(disc -> disc instanceof Disc).map(disc -> (Disc)disc).collect(Collectors.toList());
+        List<IMedium> oDiscs = this.getService().getDiscs().get().getResponseData().stream().filter(disc -> disc instanceof Disc).map(disc -> (Disc)disc).collect(Collectors.toList());
         return MediaServiceResult.OK.setResponseData(oDiscs).getResponse();
     }
     
@@ -174,7 +186,7 @@ public class MediaRest {
         
         Response result = MediaServiceResult.BadRequest.getResponse();
         if (barcode != null) {
-            Optional<MediaServiceResult> oBook = new MediaService().getDisc(barcode);
+            Optional<MediaServiceResult> oBook = this.getService().getDisc(barcode);
             result = oBook.isPresent() ? oBook.get().getResponse() : MediaServiceResult.BadRequest.getResponse();
         }
        return result;
@@ -201,7 +213,7 @@ public class MediaRest {
         
         Response result;
         try {
-            result = new MediaService().addDisc(disc).get().getResponse();
+            result = this.getService().addDisc(disc).get().getResponse();
         } catch (NullPointerException exception) {
             result = MediaServiceResult.BadRequest.getResponse();
         }
@@ -230,7 +242,7 @@ public class MediaRest {
         
         Response result;
         if (disc != null && disc.getBarcode().equals(barcode)) {
-            result = new MediaService().updateDisc(disc).get().getResponse();
+            result = this.getService().updateDisc(disc).get().getResponse();
         } else {
             result = MediaServiceResult.BadRequest.getResponse();
         }
@@ -254,7 +266,7 @@ public class MediaRest {
             return MediaServiceResult.IamATeapot.getResponse();
         }
         
-        return new MediaService().getMediums().get().getResponse();
+        return this.getService().getMediums().get().getResponse();
     }
 
 }

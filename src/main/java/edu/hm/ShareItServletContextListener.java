@@ -7,6 +7,8 @@ import com.google.inject.servlet.ServletModule;
 
 import edu.hm.rfurch.shareit.data.IData;
 import edu.hm.rfurch.shareit.data.MediaResource;
+import edu.hm.rfurch.shareit.logic.IMediaService;
+import edu.hm.rfurch.shareit.logic.MediaService;
 
 /**
  * Context Listener to enable usage of google guice together with jersey.
@@ -18,7 +20,10 @@ public class ShareItServletContextListener extends GuiceServletContextListener {
     private static final Injector injector = Guice.createInjector(new ServletModule() {
         @Override
         protected void configureServlets() {
+            bind(IMediaService.class).to(MediaService.class);
             bind(IData.class).to(MediaResource.class);
+
+
         }
     });
 

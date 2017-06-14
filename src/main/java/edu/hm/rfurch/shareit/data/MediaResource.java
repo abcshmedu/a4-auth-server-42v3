@@ -10,14 +10,19 @@ import java.util.*;
  */
 public class MediaResource implements IData {
 
-    private final List<IMedium> mediaDatabase;
+    private static List<IMedium> mediaDatabase = mediaDatabase = new ArrayList<IMedium>()
+    {
+        {
+            mediaDatabase.add(new Book("Title1", "Author1", "9783866801929"));
+            mediaDatabase.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
+        }
+    };
+
     /**
      * Ctor of MediaResource.
      */
     protected MediaResource() {
-        mediaDatabase = new ArrayList<>();
-        mediaDatabase.add(new Book("Title1", "Author1", "9783866801929"));
-        mediaDatabase.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
+
     }
 
     @Override
