@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -21,22 +22,22 @@ import edu.hm.rfurch.shareit.model.IMedium;
 
 public class HibernateMediaResourceTest {
 
-	@BeforeClass
-	public static void setup() {
-		final Injector injector = Guice.createInjector(new HibernateMediaResourceModule());
-		injector.injectMembers(ResourceManager.getResourceManager());
-		
-		// Insert TestMedia
-		ResourceManager.dataAccess().add(new Book("Title1", "Author1", "9783866801929"));
-		ResourceManager.dataAccess().add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
+	private IData data;
+	@Before
+	public void setup() {
+		Injector injector = Guice.createInjector(new HibernateMediaResourceModule());
+		this.data = injector.getInstance(IData.class);
+		data.add(new Book("Title1", "Author1", "9783866801929"));
+		data.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
 	}
+	
 	
     @Test
     public void getMediumsFromDefaultValues(){
         List<IMedium> expects = new ArrayList<>();
         expects.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
         expects.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
-        List<IMedium> actuals =  ResourceManager.dataAccess().getMediums();
+        List<IMedium> actuals = data.getMediums();
         System.out.println(actuals);
         Assert.assertArrayEquals(expects.toArray(),actuals.toArray());
     }
@@ -45,7 +46,7 @@ public class HibernateMediaResourceTest {
     public void getBooksFromDefaultValues(){
         List<IBook> expects = new ArrayList<>();
         expects.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
-        List<IMedium> actuals =  ResourceManager.dataAccess().getBooks().get();
+        List<IMedium> actuals = data.getBooks().get();
         Assert.assertArrayEquals(expects.toArray(),actuals.toArray());
     }
 
@@ -53,87 +54,87 @@ public class HibernateMediaResourceTest {
     public void getDiscsFromDefaultValues(){
         List<IDisc> expects = new ArrayList<>();
         expects.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
-        List<IMedium> actuals =  ResourceManager.dataAccess().getDiscs().get();
+        List<IMedium> actuals = data.getDiscs().get();
         Assert.assertArrayEquals(expects.toArray(),actuals.toArray());
     }
 
     @Test
     public void getDiscByBarcodeFromDefaultValuesExists(){
         IDisc expect = new Disc("Disc1", "4059251015567", "Dirctor1", 1);
-        Optional<IMedium> actual =  ResourceManager.dataAccess().getDisc("4059251015567");
+        Optional<IMedium> actual = data.getDisc("4059251015567");
         Assert.assertTrue(actual.isPresent());
         Assert.assertEquals(expect,actual.get());
     }
     @Test
     public void getDiscByBarcodeFromDefaultValuesNotExists(){
-        Optional<IMedium> actual =  ResourceManager.dataAccess().getDisc("No");
+        Optional<IMedium> actual = data.getDisc("No");
         Assert.assertFalse(actual.isPresent());
     }
 
     @Test
     public void getBookByIsbnFromDefaultValuesExists(){
         IBook expect = new Book("Title1", "Author1", "978-3-86680-192-9");
-        Optional<IMedium> actual =  ResourceManager.dataAccess().getBook("978-3-86680-192-9");
+        Optional<IMedium> actual = data.getBook("978-3-86680-192-9");
         Assert.assertTrue(actual.isPresent());
         Assert.assertEquals(expect,actual.get());
     }
     @Test
     public void getBookByIsbnFromDefaultValuesNotExists(){
-        Optional<IMedium> actual =  ResourceManager.dataAccess().getBook("No");
+        Optional<IMedium> actual = data.getBook("No");
         Assert.assertFalse(actual.isPresent());
     }
 	
     @Test
     public void addABookAndDeleteIt(){
         IBook expect = new Book("Title2", "Author2", "978-3-8369-4917-0");
-        ResourceManager.dataAccess().add(expect);
-        Optional<IMedium> actual =  ResourceManager.dataAccess().getBook("978-3-8369-4917-0");
+        data.add(expect);
+        Optional<IMedium> actual = data.getBook("978-3-8369-4917-0");
 
         Assert.assertEquals(expect,actual.get());
-        Assert.assertEquals(expect,ResourceManager.dataAccess().getBooks().get().stream().filter(IBook.class::isInstance)
+        Assert.assertEquals(expect,data.getBooks().get().stream().filter(IBook.class::isInstance)
                 .map(IBook.class::cast).filter(f -> f.getIsbn().equals("9783836949170")).findAny().get());
-        Assert.assertEquals(expect,ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
+        Assert.assertEquals(expect,data.getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().get());
 
-        ResourceManager.dataAccess().remove(expect);
+        data.remove(expect);
 
-        Optional<IMedium> actual2 =  ResourceManager.dataAccess().getBook("978-3-8369-4917-0");
+        Optional<IMedium> actual2 =  data.getBook("978-3-8369-4917-0");
         Assert.assertFalse(actual2.isPresent());
-        Assert.assertFalse(ResourceManager.dataAccess().getBooks().get().stream().filter(IBook.class::isInstance)
+        Assert.assertFalse(data.getBooks().get().stream().filter(IBook.class::isInstance)
                 .map(IBook.class::cast).filter(f -> f.getIsbn().equals("978-3-8369-4917-0")).findAny().isPresent());
-        Assert.assertFalse(ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().isPresent());
+        Assert.assertFalse(data.getMediums().stream().filter(f -> f.getTitle().equals("Title2")).findAny().isPresent());
 
     }
     
     @Test
     public void addADiscAndDeleteIt(){
         IDisc expect = new Disc("Disc2", "5055011702189", "Dirctor2", 1);
-        ResourceManager.dataAccess().add(expect);
-        Optional<IMedium> actual =  ResourceManager.dataAccess().getDisc("5055011702189");
+        data.add(expect);
+        Optional<IMedium> actual =  data.getDisc("5055011702189");
 
         Assert.assertEquals(expect,actual.get());
-        Assert.assertEquals(expect,ResourceManager.dataAccess().getDiscs().get().stream().filter(IDisc.class::isInstance)
+        Assert.assertEquals(expect,data.getDiscs().get().stream().filter(IDisc.class::isInstance)
                 .map(IDisc.class::cast).filter(f -> f.getBarcode().equals("5055011702189")).findAny().get());
-        Assert.assertEquals(expect,ResourceManager.dataAccess().getMediums().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().get());
+        Assert.assertEquals(expect,data.getMediums().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().get());
 
-        ResourceManager.dataAccess().remove(expect);
+        data.remove(expect);
 
-        Optional<IMedium> actual2 =  ResourceManager.dataAccess().getDisc("5055011702189");
+        Optional<IMedium> actual2 =  data.getDisc("5055011702189");
         Assert.assertFalse(actual2.isPresent());
-        Assert.assertFalse(ResourceManager.dataAccess().getDiscs().get().stream().filter(IDisc.class::isInstance)
+        Assert.assertFalse(data.getDiscs().get().stream().filter(IDisc.class::isInstance)
                 .map(IDisc.class::cast).filter(f -> f.getBarcode().equals("5055011702189")).findAny().isPresent());
-        Assert.assertFalse(ResourceManager.dataAccess().getDiscs().get().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().isPresent());
+        Assert.assertFalse(data.getDiscs().get().stream().filter(f -> f.getTitle().equals("Disc2")).findAny().isPresent());
     }
     
 
     @Test
     public void checkIfClearWorks() {
-       ResourceManager.dataAccess().clear();
-        Assert.assertEquals(0, ResourceManager.dataAccess().getMediums().size());
-        Assert.assertEquals(0, ResourceManager.dataAccess().getBooks().get().size());
-        Assert.assertEquals(0, ResourceManager.dataAccess().getDiscs().get().size());
+       data.clear();
+        Assert.assertEquals(0, data.getMediums().size());
+        Assert.assertEquals(0, data.getBooks().get().size());
+        Assert.assertEquals(0, data.getDiscs().get().size());
 
-        ResourceManager.dataAccess().add(new Book("Title1", "Author1", "978-3-86680-192-9"));
-        ResourceManager.dataAccess().add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
+        data.add(new Book("Title1", "Author1", "978-3-86680-192-9"));
+        data.add(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
     }
 
 }

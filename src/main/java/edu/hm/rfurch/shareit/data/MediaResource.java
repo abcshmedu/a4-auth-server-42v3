@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class MediaResource implements IData {
 
-    private  List<IMedium> mediaDatabase = mediaDatabase = new ArrayList<IMedium>();
+    private  List<IMedium> mediaDatabase = new ArrayList<IMedium>();
 
     /**
      * Ctor of MediaResource.

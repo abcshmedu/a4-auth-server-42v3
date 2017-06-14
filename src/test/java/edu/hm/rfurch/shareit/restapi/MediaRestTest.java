@@ -18,7 +18,7 @@ import edu.hm.rfurch.shareit.model.Book;
 public class MediaRestTest {
 
 	private static final String MAGIC_TOKEN = "MAGICTOKEN";
-	IMediaService service;
+	private IMediaService service;
 	@Before
 	public void setup() {
 		Injector injector = Guice.createInjector(new MediaResourceModule());
