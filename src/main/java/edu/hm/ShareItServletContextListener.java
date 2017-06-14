@@ -13,7 +13,7 @@ import edu.hm.rfurch.shareit.data.MediaResource;
  * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
  *
  */
-public class ShareitServletContextListener extends GuiceServletContextListener {
+public class ShareItServletContextListener extends GuiceServletContextListener {
 
     private static final Injector injector = Guice.createInjector(new ServletModule() {
         @Override

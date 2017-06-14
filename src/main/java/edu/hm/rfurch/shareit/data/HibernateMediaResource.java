@@ -18,34 +18,30 @@ import org.hibernate.cfg.Configuration;
 public class HibernateMediaResource implements IData {
 
 	private final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-	private final Session entityManager = sessionFactory.getCurrentSession();
+	
     /**
      * Ctor of HibernateMediaResource.
      */
     protected HibernateMediaResource() {
-    	Transaction tx = entityManager.beginTransaction();
-        entityManager.persist(new Book("Title1", "Author1", "9783866801929"));
-        entityManager.persist(new Disc("Disc1", "4059251015567", "Dirctor1", 1));
-        tx.commit();
     }
 
     @Override
     public List<IMedium> getMediums() {
-    	Query query = entityManager.createQuery("SELECT * FROM Medium");
-    	return query.getResultList();
+    	final Session session = sessionFactory.getCurrentSession();
+    	final Transaction tx = session.beginTransaction();
+    	final List<IMedium> result = session.createQuery("from BaseMedium").list();
+    	tx.commit();
+    	return result;	
     }
 
     @Override
     public Optional<Boolean> add(IMedium medium) {
-    	Transaction tx = entityManager.beginTransaction();
-    	
-    	Query query = entityManager.createQuery("SELECT * FROM Medium WHERE title = :title");
-    	query.setParameter("title", medium.getTitle());
-    	List<IMedium> response = query.getResultList();
-    	
+    	final Session session = sessionFactory.getCurrentSession();
+    	final Transaction tx = session.beginTransaction();
+  	
         Optional<Boolean> result;
-        if (medium != null && medium.valid() && response.size() != 0) {
-            entityManager.persist(medium);
+        if (medium != null && medium.valid() && !exists(medium)) {
+            session.persist(medium);
             result = Optional.of(true);
         } else {
             result = Optional.of(false);
@@ -58,13 +54,11 @@ public class HibernateMediaResource implements IData {
     
     @Override
     public Optional<Boolean> remove(IMedium medium) {
-    	Transaction tx = entityManager.beginTransaction();
+    	final Session session = sessionFactory.getCurrentSession();
+    	Transaction tx = session.beginTransaction();
     	
-    	Query query = entityManager.createQuery("SELECT * FROM Medium WHERE title = :title");	//checks whether medium exists for boolean result
-    	query.setParameter("title", medium.getTitle());
-    	Optional<Boolean> result = Optional.of(query.getResultList().size() == 1);
-    	
-        entityManager.remove(medium);
+    	Optional<Boolean> result = Optional.of(exists(medium));
+    	session.remove(medium);
         
         tx.commit();
         return result;
@@ -72,14 +66,32 @@ public class HibernateMediaResource implements IData {
 
     @Override
     public Optional<Boolean> clear() {
-    	Transaction tx = entityManager.beginTransaction();
+    	final Session session = sessionFactory.getCurrentSession();
+    	Transaction tx = session.beginTransaction();
     	
-    	Query query = entityManager.createQuery("DELETE FROM Medium");
+    	Query query = session.createNativeQuery("DELETE FROM Medium");
         query.executeUpdate();
         
         tx.commit();
         return Optional.of(true);
     }
     
+    private boolean exists(IMedium medium) {
+    	final Session session = sessionFactory.getCurrentSession();
+    	Query query = null;
+    	boolean result = false; 
+    	if(medium instanceof IBook) {
+    		query =  session.createNativeQuery("SELECT count(*) FROM Medium WHERE isbn = :isbn");
+    		query.setParameter("isbn", ((IBook)medium).getIsbn());
+    	} else if(medium instanceof IDisc) {
+    		query =  session.createNativeQuery("SELECT count(*) FROM Medium WHERE barcode = :barcode");
+    		query.setParameter("barcode", ((IDisc)medium).getBarcode());
+    	}
+    	
+    	if(query != null)
+    		result = query.getFirstResult() == 1;
+    	
+    	return result;
+    }
     
 }

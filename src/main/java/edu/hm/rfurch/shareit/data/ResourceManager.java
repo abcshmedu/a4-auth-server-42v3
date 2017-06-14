@@ -11,7 +11,7 @@ public final class ResourceManager {
     /**
      * Singleton of the stored data.
      */
-    private static IData DATA = null;
+	private static IData DATA = null;
     //private static IData DATA = new MediaResource();
     
     private final static ResourceManager RESOURCEMANAGER = new ResourceManager();

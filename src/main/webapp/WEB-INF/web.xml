@@ -68,6 +68,6 @@
 	</servlet-mapping>
 
 	<listener>
-		<listener-class>edu.hm.ShareitServletContextListener</listener-class>
+		<listener-class>edu.hm.ShareItServletContextListener</listener-class>
 	</listener>
 </web-app>

@@ -3,6 +3,8 @@ package edu.hm;
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.webapp.*;
 
+import edu.hm.rfurch.shareit.data.ResourceManager;
+
 /**
  * Start the application without an AppServer like tomcat.
  * @author <a mailto:axel.boettcher@hm.edu>Axel B&ouml;ttcher</a>
@@ -30,6 +32,11 @@ public final class JettyStarter {
         jetty.setHandler(new WebAppContext(WEBAPP_DIR, APP_URL));
         jetty.start();
         System.out.println("Jetty listening on port " + PORT);
+        
+        // DEBUG
+        System.out.println(ResourceManager.dataAccess());
+        //
+        
         jetty.join();
     }
 
