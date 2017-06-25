@@ -519,16 +519,83 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 <div class="sect2">
 <h3 id="_fachlicher_kontext"><a class="anchor" href="#_fachlicher_kontext"></a>3.1. Fachlicher Kontext</h3>
 <div class="paragraph">
-<p><strong>&lt;Diagramm und/oder Tabelle&gt;</strong></p>
-</div>
-<div class="paragraph">
-<p><strong>&lt;optional: Erläuterung der externen fachlichen Schnittstellen&gt;</strong></p>
+    <p><img src="context.bmp"/></p><br/>
+    <table>
+    <tr>
+        <td>ID</td>
+        <td>Sender</td>
+        <td>Empfänger</td>
+        <td>Daten</td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Client</td>
+        <td>AuthService</td>
+        <td>Daten die zur Registrierung benötigt werden</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>AuthService</td>
+        <td>Client</td>
+        <td>Authentizitätsnachweis</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Client</td>
+        <td>ShareIt</td>
+        <td>Authentizitätsnachweis + Anfrage</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>ShareIt</td>
+        <td>AuthService</td>
+        <td>Authentizitätsnachweis</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>AuthService</td>
+        <td>ShareIt</td>
+        <td>Ergebnis der Prüfung</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>ShareIt</td>
+        <td>Client</td>
+        <td>Ergebnis der Anfrage</td>
+    </tr>
+    </table>
+    <br/>
+    <br/>
+
+    <p>REST-Schnittstelle AuthService</p>
+    <table>
+        <tr>
+            <td>Pfad</td>
+            <td>Verb</td>
+            <td>Beschreibung</td>
+        </tr>
+        <tr>
+            <td>/auth/user/</td>
+            <td>POST</td>
+            <td>Neuen User anlegen</td>
+        </tr>
+        <tr>
+            <td>/auth/token/</td>
+            <td>PUT</td>
+            <td>Neuen Token anfordern</td>
+        </tr>
+        <tr>
+            <td>/auth/token/</td>
+            <td>DELETE</td>
+            <td>Token löschen</td>
+        </tr>
+    </table>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_technischer_kontext"><a class="anchor" href="#_technischer_kontext"></a>3.2. Technischer Kontext</h3>
 <div class="paragraph">
-<p><strong>&lt;Diagramm oder Tabelle&gt;</strong></p>
+    <p><img src="wege.png"/></p>
 </div>
 <div class="paragraph">
 <p><strong>&lt;optional: Erläuterung der externen technischen Schnittstellen&gt;</strong></p>
