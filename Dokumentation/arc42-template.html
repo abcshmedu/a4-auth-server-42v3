@@ -472,8 +472,11 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div class="sect2">
 <h3 id="_qualit_tsziele"><a class="anchor" href="#_qualit_tsziele"></a>1.2. Qualitätsziele</h3>
-    <li>Testabdeckung: 85%</li></p>
-    <li>CheckStyle: clean</li></p>
+<ul>
+	<li>Hohe Testabdeckung</li>
+	<li>CheckStyle: clean</li>
+	<li>Schnelle bearbeitung von Anfragen</li>
+</ul>
 </div>
 <div class="sect2">
 <h3 id="_stakeholder"><a class="anchor" href="#_stakeholder"></a>1.3. Stakeholder</h3>
@@ -620,11 +623,11 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
-<div class="sect1">
+    <div class="sect1">
       <h2 id="section-building-block-view"><a class="anchor" href="#section-building-block-view"></a>5. Bausteinsicht</h2>
       <div class="sectionbody">
         <div class="sect2">
-          <p>Für details siehe javadoc und swagger (dokumentation.html).</p>
+          <p>Für Details siehe javadoc. Für REST-Schnittstellen Beschreibung siehe Swagger (dokumentation.html).</p>
           <h3 id="_whitebox_gesamtsystem"><a class="anchor" href="#_whitebox_gesamtsystem"></a>5.1. Whitebox Gesamtsystem</h3>
           <div class="paragraph">
             <p><img src="Ebene1.png" /></p>
@@ -637,8 +640,8 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
               </dd>
               <dt class="hdlist1">Enthaltene Bausteine</dt>
               <dd>
-                <p>ShareIt: Micosystem zur verwaltung der medien.</p>
-                <p>MSA: Micosystem zur authentifizierung.</p>
+                <p>ShareIt: Micosystem zur Verwaltung der Medien.</p>
+                <p>MSA: Micosystem zur Authentifizierung.</p>
               </dd>
             </dl>
           </div>
@@ -733,7 +736,7 @@ Der Server gibt den Status über die Anfrage zurück.</p>
               <h3 id="__em_konzept_2_em"><a class="anchor" href="#__em_konzept_2_em"></a>7.2. Checkstyle</h3>
               <div class="paragraph">
                 <p>Die Regeln die in Herr Böttchers Checkstyle Konfiguration definiert sind sollten stets eingehalten werden.
-                  Wenn nötig kann Checkstyle an einzelnen Stellen nach eigenem ermessen ausgeschaltet werden.</p>
+                  Wenn nötig kann Checkstyle an einzelnen Stellen nach eigenem Ermessen ausgeschaltet werden.</p>
               </div>
             </div>
           </div>
@@ -744,27 +747,39 @@ Der Server gibt den Status über die Anfrage zurück.</p>
             <table>
               <tr>
                 <th>Funktionalität<br></th>
-                <th>Tool</th>
+                <th>Alternativen</th>
+                <th>Entscheidung<br></th>
+                <th>Begründung</th>
               </tr>
               <tr>
                 <td>Servlet Container<br></td>
+                <td>...</td>
                 <td>Jetty</td>
+                <td>...</td>
               </tr>
               <tr>
                 <td>JSON (De-)Serialisierung<br></td>
+                <td>...</td>
                 <td>Jackson</td>
+                <td>...</td>
               </tr>
               <tr>
                 <td>Mock testing<br></td>
+                <td>...</td>
                 <td>Mockito</td>
+                <td>...</td>
               </tr>
               <tr>
                 <td>Dependency Injection<br></td>
+                <td>...</td>
                 <td>Google-Guice (Siehe auch Praktikumsaufgabe 3: di.pdf)<br></td>
+                <td>...</td>
               </tr>
               <tr>
                 <td>Persistenzierung</td>
+                <td>...</td>
                 <td>Hibernate</td>
+                <td>...</td>
               </tr>
             </table>
             <div style="page-break-after: always;"></div>
@@ -775,10 +790,15 @@ Der Server gibt den Status über die Anfrage zurück.</p>
           <div class="sectionbody">
             <div class="sect2">
               <h3 id="_qualit_tsbaum"><a class="anchor" href="#_qualit_tsbaum"></a>9.1. Qualitätsbaum</h3>
-
+              <p>&lt;Qualitätsbaum mit Szenarien aus 9.2 als Blätter&gt;</p>
             </div>
             <div class="sect2">
               <h3 id="_qualit_tsszenarien"><a class="anchor" href="#_qualit_tsszenarien"></a>9.2. Qualitätsszenarien</h3>
+              <ol>
+                <li>Die Testabdeckung wird mit dem Tool EMMA gemessen. Die Testabdeckung beträgt mindestens 85%.</li>
+                <li>Eine Überprüfung des Codes mit Checkstyle endet ohne Fehler.</li>
+                <li>Eine GET Anfrage für ein bestimmtes Buch wird innerhalb von einer Sekunde beantwortet.</li>
+              </ol>
               <div style="page-break-after: always;"></div>
             </div>
           </div>
@@ -822,7 +842,7 @@ Der Server gibt den Status über die Anfrage zurück.</p>
                     <p class="tableblock">MSA</p>
                   </td>
                   <td class="tableblock halign-left valign-top">
-                    <p class="tableblock">MicroServiceAuthenticator - Der Microservice, der zur authentifizierung genutzt wird</p>
+                    <p class="tableblock">MicroServiceAuthenticator - Der Microservice, der zur Authentifizierung genutzt wird</p>
                   </td>
                 </tr>
                 <tr>
